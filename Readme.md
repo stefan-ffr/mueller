@@ -1,194 +1,204 @@
-# Familie Müller - Website Anleitung
+# Familie Müller - Familien-Website
 
-## 📋 Übersicht
+Eine moderne, mehrsprachige Website mit individuellen Profilseiten für die Familie Müller.
 
-Diese mehrsprachige Website (Deutsch, English, ไทย) für die **Familie Müller** enthält eine Hauptseite mit Verlinkungen zu individuellen Profilseiten für jedes Familienmitglied (alphabetisch sortiert):
+## ✨ Neue Features
 
-- **Elisabeth** - elisabeth.html (nur Schweiz 🇨🇭)
-- **Rolf** - rolf.html (Schweiz 🇨🇭 + Thailand 🇹🇭)
-- **Samret** - samret.html (nur Thailand 🇹🇭)
-- **Sky** - sky.html (nur Thailand 🇹🇭 + Schnellkontakt zu Eltern)
-- **Stefan** - stefan.html (Schweiz 🇨🇭 + Thailand 🇹🇭)
+### 1. **Vollständige Namen auf Profilseiten**
+Alle Profilseiten zeigen jetzt den vollständigen Namen mit Nachnamen:
+- Elisabeth Müller
+- Stefan Müller
+- Rolf Müller
+- Samret Müller
+- Sky Müller
 
-## 🌍 Mehrsprachigkeit
+Die Nachnamen erscheinen auch in allen vCard-Downloads und QR-Codes.
 
-Alle Seiten sind in **drei Sprachen** verfügbar:
-- 🇩🇪 Deutsch
-- 🇬🇧 English
-- 🇹🇭 ไทย (Thai)
+### 2. **Automatische Browser-Spracherkennung** 🌍
+Die Website erkennt automatisch die Sprache des Browsers und stellt die Inhalte entsprechend dar:
+- **Deutsch** (de-DE, de-CH, de-AT, etc.) → Deutsche Inhalte
+- **Thai** (th-TH) → Thailändische Inhalte
+- **Standard** → Englische Inhalte
 
-**Standardsprachen pro Person:**
-- Elisabeth & Stefan: Deutsch
-- Rolf: English
-- Samret & Sky: ไทย (Thai)
+Die Sprache kann jederzeit manuell über die Sprachbuttons oben rechts geändert werden. Die Auswahl wird im Browser gespeichert und gilt für alle Seiten.
 
-Die Sprachwahl wird automatisch gespeichert und gilt für alle Seiten.
+## 👨‍👩‍👧‍👦 Familienmitglieder
 
-## 🚀 Erste Schritte
+- **Elisabeth Müller** - Schweiz 🇨🇭
+- **Stefan Müller** - Schweiz 🇨🇭 & Thailand 🇹🇭
+- **Rolf Müller** - Schweiz 🇨🇭 & Thailand 🇹🇭
+- **Samret Müller** - Thailand 🇹🇭
+- **Sky Müller** - Thailand 🇹🇭 (mit Schnellkontakt-Funktion)
 
-### 1. Kontaktinformationen aktualisieren
+## 🌐 Unterstützte Sprachen
 
-**Elisabeth (nur Schweiz):**
-- Telefon: `+41 00 000 00 00`
-- E-Mail: `elisabeth@example.ch`
-- Adresse: `Musterstraße 123, 8000 Zürich`
+1. **Deutsch** 🇩🇪 - Vollständige Übersetzung
+2. **English** 🇬🇧 - Complete translation
+3. **ไทย** 🇹🇭 - การแปลที่สมบูรณ์
 
-**Stefan (Schweiz + Thailand):**
-- Schweiz: `+41 00 000 00 00` / `stefan@example.ch`
-- Thailand: `+66 00 000 0000` / `stefan@example.th`
+## 📱 Funktionen pro Profilseite
 
-**Rolf (Schweiz + Thailand):**
-- Schweiz: `+41 00 000 00 00` / `rolf@example.ch`
-- Thailand: `+66 00 000 0000` / `rolf@example.th`
+### Standard-Features (alle Seiten):
+- ✅ **Automatische Spracherkennung** beim ersten Besuch
+- ✅ **Manuelle Sprachwahl** über Buttons
+- ✅ Vollständiger Name (Vor- und Nachname)
+- ✅ Responsive Design (Desktop, Tablet, Smartphone)
+- ✅ QR-Codes für einfaches Teilen
+- ✅ vCard-Download für Kontakte
+- ✅ Moderne, farbcodierte UI
 
-**Samret (nur Thailand):**
-- Telefon: `+66 00 000 0000`
-- E-Mail: `samret@example.th`
-- Adresse: `123 Moo 1, Bangkok 10100`
-
-**Sky (nur Thailand):**
-- Telefon: `+66 00 000 0000`
-- E-Mail: `sky@example.th`
-- Adresse: `123 Moo 1, Bangkok 10100`
-- **WICHTIG:** Aktualisiere auch die Telefonnummern für die Großeltern (Samret und Rolf) in der "Schnellkontakt"-Sektion!
-
-### 2. Website hochladen
-
-Lade alle HTML-Dateien auf einen Webserver oder Webhosting-Service hoch:
-
-**Empfohlene kostenlose Hosting-Optionen:**
-- **GitHub Pages**: Kostenlos für öffentliche Repositories
-- **Netlify**: Einfaches Drag & Drop Interface
-- **Vercel**: Schnelle Bereitstellung
-- **Cloudflare Pages**: Kostenloses Hosting mit SSL
-
-### 3. QR-Codes für Visitenkarten
-
-**Elisabeth (2 QR-Codes):**
-- QR 1: 🔗 Link zur Webseite
-- QR 2: 📇 vCard (nur Schweiz Kontakte)
-
-**Stefan & Rolf (3 QR-Codes jeweils):**
-- QR 1: 🇨🇭 Link zur Seite (Schweiz)
-- QR 2: 🇹🇭 Link zur Seite (Thailand)
-- QR 3: 📇 Kombinierte vCard (beide Länder)
-
-**Samret & Sky (2 QR-Codes jeweils):**
-- QR 1: 🔗 Link zur Webseite
-- QR 2: 📇 vCard (nur Thailand Kontakte)
-
-**Nach dem Hochladen:**
-1. Besuche die jeweilige Profilseite im Browser
-2. Alle QR-Codes werden automatisch generiert
-3. Mache Screenshots der gewünschten QR-Codes
-4. Füge die QR-Codes zu den Visitenkarten hinzu
-
-**QR-Code 3 (bei Stefan & Rolf)** ist besonders praktisch, da er alle Kontaktdaten direkt enthält und ohne Internetverbindung funktioniert!
-
-## 📱 Funktionen
-
-### Hauptseite (index.html):
-- **Sprachwahl**: Deutsch, English, Thai
-- Links zu allen Familienmitgliedern
-- Alphabetische Sortierung
-
-### Profilseiten - Allgemein:
-- **Sprachwahl**: Jede Seite hat ihre eigene Sprachwahl
-- **Standardsprache**: Wird automatisch gesetzt
-- **Responsive Design**: Funktioniert auf Desktop, Tablet und Smartphone
-- **Moderne UI**: Mit Tailwind CSS gestaltet
-
-### Elisabeth (elisabeth.html):
-- 🇨🇭 Nur Schweizer Kontakte
+### Elisabeth Müller:
+- 🇨🇭 Schweizer Kontakte
 - 2 QR-Codes (Link + vCard)
 - 1 Download-Button
 
-### Stefan & Rolf:
+### Stefan & Rolf Müller:
 - 🇨🇭 Schweizer Kontakte
 - 🇹🇭 Thailändische Kontakte
 - 3 QR-Codes (CH Link, TH Link, Kombinierte vCard)
 - 3 Download-Buttons (Komplett, nur CH, nur TH)
 
-### Samret (samret.html):
-- 🇹🇭 Nur thailändische Kontakte
+### Samret Müller:
+- 🇹🇭 Thailändische Kontakte
 - 2 QR-Codes (Link + vCard)
 - 1 Download-Button
 
-### Sky (sky.html):
-- 🇹🇭 Nur thailändische Kontakte
-- **SPEZIAL: Schnellkontakt-Bereich** mit direkten Call/Message-Buttons für:
-  - Samret (Oma / ยาย) 📞💬
-  - Rolf (Opa / ตา) 📞💬
+### Sky Müller:
+- 🇹🇭 Thailändische Kontakte
+- ⚡ **Schnellkontakt-Bereich** mit direkten Call/Message-Buttons für:
+  - Samret (Mama) 📞💬
+  - Rolf (Papa) 📞💬
 - 2 QR-Codes (Link + vCard)
 - 1 Download-Button
 
-## 🎨 Design-Anpassungen
+## 🎨 Design
 
-Jede Person hat eine individuelle Farbgebung:
-
-- Elisabeth: Lila (Purple)
-- Rolf: Grün (Green)
-- Samret: Pink
-- Sky: Cyan
-- Stefan: Blau (Blue)
-
-Die Farben können in den HTML-Dateien angepasst werden, indem die Tailwind CSS-Klassen geändert werden.
+Jedes Familienmitglied hat eine individuelle Farbgebung:
+- **Elisabeth**: Lila/Pink (Purple)
+- **Stefan**: Blau/Indigo (Blue)
+- **Rolf**: Grün (Green)
+- **Samret**: Pink
+- **Sky**: Cyan/Blau (Cyan)
 
 ## 🔧 Technische Details
 
-- **Framework**: Tailwind CSS (über CDN)
-- **QR-Code**: QRCode.js Library
-- **Mehrsprachigkeit**: JavaScript mit localStorage
-- **Keine Server-Logik**: Rein statische HTML-Dateien
-- **Browser-Kompatibilität**: Alle modernen Browser
+### Verwendete Technologien:
+- **Tailwind CSS** (via CDN) - Modernes UI-Framework
+- **QRCode.js** - QR-Code Generierung
+- **Vanilla JavaScript** - Keine externen Frameworks nötig
 
-## 📝 Nächste Schritte
+### Browser-Spracherkennung:
+```javascript
+function detectBrowserLanguage() {
+    const browserLang = navigator.language || navigator.userLanguage;
+    const langCode = browserLang.toLowerCase().split('-')[0];
+    
+    if (langCode === 'de') return 'de';
+    if (langCode === 'th') return 'th';
+    return 'en'; // Standard
+}
+```
 
-1. ✅ Kontaktinformationen in allen HTML-Dateien aktualisieren
-2. ✅ **Bei Sky:** Telefonnummern für die Großeltern (Samret und Rolf) im Schnellkontakt-Bereich aktualisieren
-3. ✅ Website auf einen Hosting-Service hochladen
-4. ✅ URLs testen
-5. ✅ Standardsprachen testen (jede Person sollte ihre eigene Standardsprache haben)
-6. ✅ Gewünschte QR-Codes für Visitenkarten auswählen und ausdrucken
-7. ✅ Regelmäßig Kontaktdaten aktualisieren, falls nötig
+### Speicherung:
+- Die gewählte Sprache wird im `localStorage` gespeichert
+- Funktioniert seitenübergreifend
+- Bleibt nach Browserneustart erhalten
 
-## 💡 Zusätzliche Ideen
+## 📝 Anpassungen vornehmen
 
-- Füge Profilfotos hinzu
-- Ergänze Social Media Links (LINE, Facebook, Instagram, etc.)
-- Füge eine kurze Biografie hinzu
-- Erstelle eine gemeinsame Familien-Galerie
-- Füge WhatsApp/LINE Links hinzu
+### Kontaktdaten ändern:
+1. Öffne die entsprechende HTML-Datei (z.B. `stefan.html`)
+2. Suche nach den Telefonnummern, E-Mails oder Adressen
+3. Ersetze die Platzhalter mit echten Daten
+4. Speichere die Datei
 
-## 🌟 Besondere Features
+**Wichtig:** Vergiss nicht, die Daten auch in den vCard-Bereichen zu ändern (JavaScript am Ende der Datei)!
+
+### Standard-Sprache ändern:
+Die Standard-Sprache für Browser, die weder Deutsch noch Thai sind, ist Englisch. Um dies zu ändern, passe die `detectBrowserLanguage()` Funktion an:
+
+```javascript
+// Statt 'en' kannst du 'de' oder 'th' als Standard setzen
+return 'de'; // Deutsch als Standard
+```
+
+### Farben anpassen:
+Die Farben können einfach durch Ändern der Tailwind CSS-Klassen angepasst werden:
+- `purple` → Lila
+- `blue` → Blau
+- `green` → Grün
+- `pink` → Pink
+- `cyan` → Cyan
+
+## 🚀 Installation & Nutzung
+
+1. **Lokale Verwendung:**
+   - Alle Dateien in einen Ordner legen
+   - `index.html` im Browser öffnen
+   - Fertig!
+
+2. **Web-Hosting:**
+   - Alle Dateien auf einen Webserver hochladen
+   - QR-Codes mit der echten URL testen
+   - Visitenkarten erstellen
+
+## 📞 QR-Codes für Visitenkarten
+
+Jede Profilseite generiert automatisch QR-Codes. Empfehlung:
+
+**Für Elisabeth & Samret (nur ein Land):**
+- Verwende den vCard-QR-Code (funktioniert offline!)
+
+**Für Stefan & Rolf (zwei Länder):**
+- Verwende den kombinierten vCard-QR-Code
+- Oder je nach Zielgruppe den CH- oder TH-Link
+
+**Für Sky:**
+- vCard-QR-Code plus Hinweis auf Schnellkontakt-Feature
+
+## 💡 Tipps
+
+1. **Browser-Test:** Teste die automatische Spracherkennung in verschiedenen Browsern (Chrome, Firefox, Safari)
+2. **Mobile Optimierung:** Alle Seiten sind für Smartphones optimiert
+3. **QR-Code-Größe:** Für Visitenkarten mindestens 2x2 cm groß drucken
+4. **Aktualisierung:** Ändere Kontaktdaten zentral, die QR-Codes passen sich automatisch an
+
+## 🌟 Besonderheiten
+
+### Automatische Spracherkennung
+Die Sprache wird beim ersten Besuch automatisch erkannt. Beispiele:
+- Browser in Deutsch (de-CH) → Seite wird auf Deutsch angezeigt
+- Browser in Thai (th-TH) → Seite wird auf Thai angezeigt
+- Browser in Englisch (en-US) → Seite wird auf Englisch angezeigt
+- Browser in Französisch (fr-FR) → Seite wird auf Englisch (Standard) angezeigt
+
+### Sprachspeicherung
+Die einmal gewählte oder erkannte Sprache gilt für:
+- ✅ Alle Seiten der Website
+- ✅ Auch nach Browserneustart
+- ✅ Kann jederzeit manuell geändert werden
 
 ### Sky's Schnellkontakt
-Die Seite von Sky enthält einen speziellen **Schnellkontakt-Bereich** oben, der es ermöglicht, die Großeltern (Samret und Rolf) direkt anzurufen oder eine SMS zu schicken. Perfekt für Notfälle oder schnelle Kommunikation!
+Die Schnellkontakt-Funktion ermöglicht direktes Anrufen oder SMS schreiben an Mama und Papa mit nur einem Klick - perfekt für Notfälle!
 
-- **Deutsch**: Oma & Opa
-- **English**: Grandma & Grandpa  
-- **ไทย Thai**: ยาย (Yai) & ตา (Ta)
+## 📄 Dateien
 
-### Automatische Sprachwahl
-Die gewählte Sprache wird im Browser gespeichert und gilt für alle Seiten. Jede Person hat ihre eigene Standardsprache:
-- **Deutsch**: Elisabeth, Stefan
-- **English**: Rolf
-- **ไทย (Thai)**: Samret, Sky
+- `index.html` - Hauptseite mit Übersicht aller Familienmitglieder
+- `elisabeth.html` - Profilseite Elisabeth Müller
+- `stefan.html` - Profilseite Stefan Müller
+- `rolf.html` - Profilseite Rolf Müller
+- `samret.html` - Profilseite Samret Müller
+- `sky.html` - Profilseite Sky Müller
+- `README.md` - Diese Dokumentation
 
-### Flexible Kontakte
-- **Elisabeth**: Nur Schweiz (lebt hauptsächlich in der Schweiz)
-- **Stefan & Rolf**: Beide Länder (pendeln zwischen Schweiz und Thailand)
-- **Samret & Sky**: Nur Thailand (leben in Thailand)
+## 🎯 Nächste Schritte
 
-Viel Erfolg mit eurer mehrsprachigen Website für die Familie Müller! 🎉
+1. ✅ Echte Kontaktdaten einfügen
+2. ✅ Website auf Hosting-Service hochladen
+3. ✅ QR-Codes testen
+4. ✅ Automatische Spracherkennung in verschiedenen Browsern testen
+5. ✅ Visitenkarten mit QR-Codes erstellen
 
 ---
 
-## 👨‍👩‍👧‍👦 Familie Müller
-
-**Alle vCard-Daten und die Website enthalten jetzt den Familiennamen "Müller":**
-- Elisabeth Müller
-- Rolf Müller
-- Samret Müller  
-- Sky Müller
-- Stefan Müller
+**Made with ❤️ for Familie Müller**
