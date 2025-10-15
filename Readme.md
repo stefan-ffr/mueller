@@ -1,8 +1,8 @@
-# Familien-Website - Anleitung
+# Familie Müller - Website Anleitung
 
 ## 📋 Übersicht
 
-Diese mehrsprachige Website (Deutsch, English, ไทย) enthält eine Hauptseite mit Verlinkungen zu individuellen Profilseiten für jedes Familienmitglied (alphabetisch sortiert):
+Diese mehrsprachige Website (Deutsch, English, ไทย) für die **Familie Müller** enthält eine Hauptseite mit Verlinkungen zu individuellen Profilseiten für jedes Familienmitglied (alphabetisch sortiert):
 
 - **Elisabeth** - elisabeth.html (nur Schweiz 🇨🇭)
 - **Rolf** - rolf.html (Schweiz 🇨🇭 + Thailand 🇹🇭)
@@ -180,4 +180,15 @@ Die gewählte Sprache wird im Browser gespeichert und gilt für alle Seiten. Jed
 - **Stefan & Rolf**: Beide Länder (pendeln zwischen Schweiz und Thailand)
 - **Samret & Sky**: Nur Thailand (leben in Thailand)
 
-Viel Erfolg mit eurer mehrsprachigen Familien-Website! 🎉
+Viel Erfolg mit eurer mehrsprachigen Website für die Familie Müller! 🎉
+
+---
+
+## 👨‍👩‍👧‍👦 Familie Müller
+
+**Alle vCard-Daten und die Website enthalten jetzt den Familiennamen "Müller":**
+- Elisabeth Müller
+- Rolf Müller
+- Samret Müller  
+- Sky Müller
+- Stefan Müller
