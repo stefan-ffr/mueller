@@ -8,21 +8,34 @@
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
     <div class="container mx-auto px-4 py-12">
+        <!-- Sprachwahl -->
+        <div class="flex justify-end mb-8 gap-2">
+            <button onclick="setLanguage('de')" id="lang-de" class="px-4 py-2 rounded-lg font-semibold transition-colors duration-200 bg-blue-600 text-white">
+                🇩🇪 Deutsch
+            </button>
+            <button onclick="setLanguage('en')" id="lang-en" class="px-4 py-2 rounded-lg font-semibold transition-colors duration-200 bg-white text-gray-700 hover:bg-gray-100">
+                🇬🇧 English
+            </button>
+            <button onclick="setLanguage('th')" id="lang-th" class="px-4 py-2 rounded-lg font-semibold transition-colors duration-200 bg-white text-gray-700 hover:bg-gray-100">
+                🇹🇭 ไทย
+            </button>
+        </div>
+
         <!-- Header -->
         <div class="text-center mb-12">
-            <h1 class="text-5xl font-bold text-gray-800 mb-4">Unsere Familie</h1>
-            <p class="text-xl text-gray-600">Willkommen auf unserer Familien-Website</p>
+            <h1 class="text-5xl font-bold text-gray-800 mb-4" data-i18n="title">Unsere Familie</h1>
+            <p class="text-xl text-gray-600" data-i18n="subtitle">Willkommen auf unserer Familien-Website</p>
         </div>
 
         <!-- Familienmitglieder Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <!-- Stefan -->
-            <a href="stefan.html" class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 p-8 text-center group">
-                <div class="w-24 h-24 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl font-bold group-hover:scale-110 transition-transform duration-300">
-                    S
+            <!-- Elisabeth -->
+            <a href="elisabeth.html" class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 p-8 text-center group">
+                <div class="w-24 h-24 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl font-bold group-hover:scale-110 transition-transform duration-300">
+                    E
                 </div>
-                <h2 class="text-2xl font-semibold text-gray-800 mb-2">Stefan</h2>
-                <p class="text-gray-600">Kontaktinformationen ansehen →</p>
+                <h2 class="text-2xl font-semibold text-gray-800 mb-2">Elisabeth</h2>
+                <p class="text-gray-600" data-i18n="view_contact">Kontaktinformationen ansehen →</p>
             </a>
 
             <!-- Rolf -->
@@ -31,16 +44,7 @@
                     R
                 </div>
                 <h2 class="text-2xl font-semibold text-gray-800 mb-2">Rolf</h2>
-                <p class="text-gray-600">Kontaktinformationen ansehen →</p>
-            </a>
-
-            <!-- Elisabeth -->
-            <a href="elisabeth.html" class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 p-8 text-center group">
-                <div class="w-24 h-24 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl font-bold group-hover:scale-110 transition-transform duration-300">
-                    E
-                </div>
-                <h2 class="text-2xl font-semibold text-gray-800 mb-2">Elisabeth</h2>
-                <p class="text-gray-600">Kontaktinformationen ansehen →</p>
+                <p class="text-gray-600" data-i18n="view_contact">Kontaktinformationen ansehen →</p>
             </a>
 
             <!-- Samret -->
@@ -49,7 +53,7 @@
                     S
                 </div>
                 <h2 class="text-2xl font-semibold text-gray-800 mb-2">Samret</h2>
-                <p class="text-gray-600">Kontaktinformationen ansehen →</p>
+                <p class="text-gray-600" data-i18n="view_contact">Kontaktinformationen ansehen →</p>
             </a>
 
             <!-- Sky -->
@@ -58,14 +62,72 @@
                     S
                 </div>
                 <h2 class="text-2xl font-semibold text-gray-800 mb-2">Sky</h2>
-                <p class="text-gray-600">Kontaktinformationen ansehen →</p>
+                <p class="text-gray-600" data-i18n="view_contact">Kontaktinformationen ansehen →</p>
+            </a>
+
+            <!-- Stefan -->
+            <a href="stefan.html" class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 p-8 text-center group">
+                <div class="w-24 h-24 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl font-bold group-hover:scale-110 transition-transform duration-300">
+                    S
+                </div>
+                <h2 class="text-2xl font-semibold text-gray-800 mb-2">Stefan</h2>
+                <p class="text-gray-600" data-i18n="view_contact">Kontaktinformationen ansehen →</p>
             </a>
         </div>
 
         <!-- Footer -->
         <div class="text-center mt-12 text-gray-600">
-            <p>© 2025 Unsere Familie</p>
+            <p>© 2025 <span data-i18n="footer">Unsere Familie</span></p>
         </div>
     </div>
+
+    <script>
+        const translations = {
+            de: {
+                title: "Unsere Familie",
+                subtitle: "Willkommen auf unserer Familien-Website",
+                view_contact: "Kontaktinformationen ansehen →",
+                footer: "Unsere Familie"
+            },
+            en: {
+                title: "Our Family",
+                subtitle: "Welcome to our family website",
+                view_contact: "View contact information →",
+                footer: "Our Family"
+            },
+            th: {
+                title: "ครอบครัวของเรา",
+                subtitle: "ยินดีต้อนรับสู่เว็บไซต์ครอบครัวของเรา",
+                view_contact: "ดูข้อมูลติดต่อ →",
+                footer: "ครอบครัวของเรา"
+            }
+        };
+
+        function setLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+            
+            // Update button styles
+            document.querySelectorAll('[id^="lang-"]').forEach(btn => {
+                btn.className = "px-4 py-2 rounded-lg font-semibold transition-colors duration-200 bg-white text-gray-700 hover:bg-gray-100";
+            });
+            document.getElementById(`lang-${lang}`).className = "px-4 py-2 rounded-lg font-semibold transition-colors duration-200 bg-blue-600 text-white";
+            
+            // Update text
+            document.querySelectorAll('[data-i18n]').forEach(elem => {
+                const key = elem.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    elem.textContent = translations[lang][key];
+                }
+            });
+            
+            document.documentElement.lang = lang;
+        }
+
+        // Load saved language or default to German
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferredLanguage') || 'de';
+            setLanguage(savedLang);
+        });
+    </script>
 </body>
 </html>
