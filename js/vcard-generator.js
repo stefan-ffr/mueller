@@ -4,9 +4,10 @@
  * Generates vCard data from person object
  * @param {Object} person - Person object
  * @param {string|null} countryFilter - Country code filter (null, 'ch', or 'th')
+ * @param {boolean} simplified - Generate simplified vCard for QR code (no addresses)
  * @returns {string} vCard formatted string
  */
-function generateVCard(person, countryFilter = null) {
+function generateVCard(person, countryFilter = null, simplified = false) {
     let vcard = 'BEGIN:VCARD\n';
     vcard += 'VERSION:3.0\n';
     vcard += `FN:${person.fullName}\n`;
@@ -30,28 +31,30 @@ function generateVCard(person, countryFilter = null) {
         vcard += `EMAIL:${emailCountry.email}\n`;
     }
 
-    // Add addresses
-    countries.forEach(country => {
-        if (country.address) {
-            const addr = country.address;
-            const street = addr.street || '';
-            const city = addr.city || '';
-            const postalCode = addr.postalCode || '';
-            const countryName = addr.country || '';
+    // Add addresses (skip if simplified version for QR code)
+    if (!simplified) {
+        countries.forEach(country => {
+            if (country.address) {
+                const addr = country.address;
+                const street = addr.street || '';
+                const city = addr.city || '';
+                const postalCode = addr.postalCode || '';
+                const countryName = addr.country || '';
 
-            // Build extended address from district and amphoe if present
-            let extendedAddr = '';
-            if (addr.district) {
-                extendedAddr += addr.district;
-            }
-            if (addr.amphoe) {
-                if (extendedAddr) extendedAddr += ', ';
-                extendedAddr += addr.amphoe;
-            }
+                // Build extended address from district and amphoe if present
+                let extendedAddr = '';
+                if (addr.district) {
+                    extendedAddr += addr.district;
+                }
+                if (addr.amphoe) {
+                    if (extendedAddr) extendedAddr += ', ';
+                    extendedAddr += addr.amphoe;
+                }
 
-            vcard += `ADR;TYPE=HOME:;;${street}${extendedAddr ? ', ' + extendedAddr : ''};${city};;${postalCode};${countryName}\n`;
-        }
-    });
+                vcard += `ADR;TYPE=HOME:;;${street}${extendedAddr ? ', ' + extendedAddr : ''};${city};;${postalCode};${countryName}\n`;
+            }
+        });
+    }
 
     vcard += 'END:VCARD';
     return vcard;

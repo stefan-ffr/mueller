@@ -53,11 +53,12 @@ function generateQRCode(elementId, data, colorDark = '#000000') {
 function generateProfileQRCodes(person) {
     const pageUrl = window.location.href.split('?')[0] + '?person=' + person.id;
     const colorDark = person.theme.colorDark;
-    const vcard = generateVCard(person);
+    // Generate simplified vCard for QR code (without addresses to reduce size)
+    const vcard = generateVCard(person, null, true);
 
     console.log('Generating QR codes for:', person.fullName);
-    console.log('vCard length:', vcard.length);
-    console.log('vCard content:', vcard);
+    console.log('Simplified vCard length:', vcard.length);
+    console.log('Simplified vCard content:', vcard);
 
     if (person.countries.length === 1) {
         // Single country: Link + vCard QR codes
