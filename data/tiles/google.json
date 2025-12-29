@@ -1,0 +1,21 @@
+{
+  "id": "google",
+  "title": {
+    "de": "Google",
+    "en": "Google",
+    "th": "Google"
+  },
+  "description": {
+    "de": "Google Suche",
+    "en": "Google Search",
+    "th": "ค้นหาของ Google"
+  },
+  "icon": "🔍",
+  "type": "external",
+  "url": "https://www.google.com",
+  "displayOrder": 100,
+  "theme": {
+    "gradientFrom": "red-400",
+    "gradientTo": "yellow-600"
+  }
+}

@@ -12,7 +12,7 @@
   },
   "icon": "👨‍👩‍👧‍👦",
   "type": "internal",
-  "url": "pages/about.html",
+  "url": "pages/example.html",
   "displayOrder": 101,
   "theme": {
     "gradientFrom": "indigo-400",

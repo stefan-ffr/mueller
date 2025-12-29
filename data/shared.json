@@ -15,5 +15,5 @@
       "country": "Thailand"
     }
   },
-  "tiles": []
+  "tiles": ["example-about", "google"]
 }
