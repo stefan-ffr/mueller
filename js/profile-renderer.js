@@ -170,7 +170,7 @@ function renderCountrySections(person) {
                             </svg>
                             <div>
                                 <p class="text-gray-600 text-sm" data-i18n="phone">Telefon</p>
-                                <a href="tel:${country.phone.replace(/\s/g, '')}" class="text-lg text-${person.theme.textColor} hover:underline">${escapeHtml(country.phone)}</a>
+                                <a href="tel:${country.phone.replace(/\s/g, '')}" class="text-lg text-${person.theme.textColor} hover:underline">${escapeHtml(formatPhone(country.phone))}</a>
                             </div>
                         </div>
                     ` : ''}

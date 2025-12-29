@@ -37,10 +37,10 @@ async function loadShared() {
 }
 
 /**
- * Resolves address references in person data
+ * Resolves address references and sets auto-flags in person data
  * @param {Object} person - Person object
  * @param {Object} shared - Shared data object
- * @returns {Object} Person with resolved addresses
+ * @returns {Object} Person with resolved addresses and auto-flags
  */
 function resolveAddressReferences(person, shared) {
     if (!shared || !shared.addresses) {
@@ -50,8 +50,9 @@ function resolveAddressReferences(person, shared) {
     // Clone person to avoid mutating cached data
     const resolved = JSON.parse(JSON.stringify(person));
 
-    // Check each country's address
+    // Check each country's address and flag
     resolved.countries.forEach(country => {
+        // Resolve address references
         if (country.address && typeof country.address === 'string') {
             // Address is a reference like "@shared/emmenbruecke"
             if (country.address.startsWith('@shared/')) {
@@ -64,6 +65,11 @@ function resolveAddressReferences(person, shared) {
                     console.warn(`Shared address not found: ${addressKey}`);
                 }
             }
+        }
+
+        // Auto-set flag if not present
+        if (!country.flag && country.code) {
+            country.flag = getFlagForCountry(country.code);
         }
     });
 
