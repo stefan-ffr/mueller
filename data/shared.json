@@ -13,14 +13,6 @@
       "city": "Buri Ram",
       "postalCode": "31210",
       "country": "Thailand"
-    },
-    "chiangmai": {
-      "street": "789 Moo 10",
-      "district": "Tambon Beispiel",
-      "amphoe": "Amphoe Mueang",
-      "city": "Chiang Mai",
-      "postalCode": "50000",
-      "country": "Thailand"
     }
   }
 }
