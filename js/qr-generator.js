@@ -53,21 +53,52 @@ function generateQRCode(elementId, data, colorDark = '#000000') {
 function generateProfileQRCodes(person) {
     const pageUrl = window.location.href.split('?')[0] + '?person=' + person.id;
     const colorDark = person.theme.colorDark;
-    // Generate simplified vCard for QR code (without addresses to reduce size)
-    const vcard = generateVCard(person, null, true);
+
+    // Generate simplified vCard for QR code (only name, phone, email - no addresses!)
+    const vcardSimplified = generateVCardForQR(person);
 
     console.log('Generating QR codes for:', person.fullName);
-    console.log('Simplified vCard length:', vcard.length);
-    console.log('Simplified vCard content:', vcard);
+    console.log('Simplified vCard length:', vcardSimplified.length);
+    console.log('Simplified vCard content:', vcardSimplified);
 
     if (person.countries.length === 1) {
         // Single country: Link + vCard QR codes
         generateQRCode('qrcode-link', pageUrl, colorDark);
-        generateQRCode('qrcode-vcard', vcard, colorDark);
+        generateQRCode('qrcode-vcard', vcardSimplified, colorDark);
     } else {
         // Dual country: CH + TH + vCard QR codes
         generateQRCode('qrcode-ch', pageUrl, colorDark);
         generateQRCode('qrcode-th', pageUrl, colorDark);
-        generateQRCode('qrcode-vcard', vcard, colorDark);
+        generateQRCode('qrcode-vcard', vcardSimplified, colorDark);
     }
+}
+
+/**
+ * Generates a minimal vCard specifically for QR codes
+ * @param {Object} person - Person object
+ * @returns {string} Minimal vCard string
+ */
+function generateVCardForQR(person) {
+    let vcard = 'BEGIN:VCARD\n';
+    vcard += 'VERSION:3.0\n';
+    vcard += `FN:${person.fullName}\n`;
+    vcard += `N:${person.lastName};${person.firstName};;;\n`;
+
+    // Add ALL phone numbers (most important)
+    person.countries.forEach(country => {
+        if (country.phone) {
+            vcard += `TEL;TYPE=CELL:${country.phone.replace(/\s/g, '')}\n`;
+        }
+    });
+
+    // Add email (only once, from first country that has it)
+    const emailCountry = person.countries.find(c => c.email);
+    if (emailCountry && emailCountry.email) {
+        vcard += `EMAIL:${emailCountry.email}\n`;
+    }
+
+    // NO ADDRESSES for QR code - they make it too large
+
+    vcard += 'END:VCARD';
+    return vcard;
 }
