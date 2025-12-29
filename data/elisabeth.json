@@ -19,12 +19,12 @@
       "code": "ch",
       "name": "Switzerland",
       "flag": "🇨🇭",
-      "phone": "+41 79 123 45 60",
-      "email": "elisabeth@beispiel.ch",
+      "phone": "+41 61 811 26 90",
+      "email": "elisabeth@juroct.ch",
       "address": {
-        "street": "Hauptstrasse 456",
-        "city": "Emmenbrücke",
-        "postalCode": "6020",
+        "street": "Rosenweg 9",
+        "city": "Kaiseraugst",
+        "postalCode": "4303",
         "country": "Schweiz"
       }
     }
