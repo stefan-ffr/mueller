@@ -122,7 +122,7 @@ function renderQuickContact(person) {
             <div class="grid md:grid-cols-2 gap-4">
                 ${person.quickContacts.map(contact => `
                     <div class="bg-white/20 backdrop-blur-sm rounded-lg p-4">
-                        <p class="font-bold mb-3" data-i18n="${contact.label}">${translate(contact.label)}</p>
+                        <p class="font-bold mb-3 capitalize" data-i18n="${contact.label}">${escapeHtml(contact.label)}</p>
                         <div class="flex gap-2">
                             <a href="tel:${contact.phone}" class="flex-1 bg-white text-${person.theme.textColor} hover:bg-${person.theme.bgGradient.split(' ')[0].replace('from-', '')} font-semibold py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -159,7 +159,7 @@ function renderCountrySections(person) {
             <div class="bg-white rounded-lg shadow-xl p-8 mb-6">
                 <div class="flex items-center mb-6">
                     <span class="text-3xl mr-3">${country.flag}</span>
-                    <h2 class="text-2xl font-bold text-gray-800" data-i18n="${country.code === 'ch' ? 'switzerland' : (country.code === 'th' ? 'thailand' : 'contact')}">${translate(country.code === 'ch' ? 'switzerland' : (country.code === 'th' ? 'thailand' : 'contact'))}</h2>
+                    <h2 class="text-2xl font-bold text-gray-800" data-i18n="${country.code === 'ch' ? 'switzerland' : (country.code === 'th' ? 'thailand' : 'contact')}">${escapeHtml(country.name)}</h2>
                 </div>
 
                 <div class="space-y-4">
