@@ -16,20 +16,33 @@ function generateQRCode(elementId, data, colorDark = '#000000') {
     // Clear existing QR code if any
     container.innerHTML = '';
 
+    // Check if QRCode library is available
+    if (typeof QRCode === 'undefined') {
+        console.error('QRCode library not loaded!');
+        container.innerHTML = '<p class="text-red-600 text-sm">QRCode-Bibliothek nicht geladen</p>';
+        return;
+    }
+
+    console.log(`Generating QR code for element: ${elementId}`);
+    console.log(`Data length: ${data.length} characters`);
+
     try {
+        // Try with lower error correction first
         new QRCode(container, {
             text: data,
             width: 200,
             height: 200,
             colorDark: colorDark,
             colorLight: '#ffffff',
-            correctLevel: QRCode.CorrectLevel.M  // Changed from H to M for better capacity
+            correctLevel: QRCode.CorrectLevel.L  // Changed to L for maximum capacity
         });
+        console.log(`QR code generated successfully for ${elementId}`);
     } catch (error) {
-        console.error('Error generating QR code:', error);
+        console.error(`Error generating QR code for ${elementId}:`, error);
         console.error('Data length:', data.length);
-        console.error('Data:', data);
-        container.innerHTML = '<p class="text-red-600 text-sm">Fehler beim Generieren des QR-Codes</p>';
+        console.error('Data preview:', data.substring(0, 100) + '...');
+        console.error('Full error:', error.message, error.stack);
+        container.innerHTML = `<p class="text-red-600 text-sm">Fehler: ${error.message || 'Unbekannter Fehler'}</p>`;
     }
 }
 
