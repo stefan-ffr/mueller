@@ -74,15 +74,36 @@ function generateProfileQRCodes(person) {
 }
 
 /**
+ * Converts German umlauts to ASCII equivalents for better QR code encoding
+ * @param {string} text - Text to convert
+ * @returns {string} ASCII-safe text
+ */
+function toASCII(text) {
+    return text
+        .replace(/ä/g, 'ae')
+        .replace(/ö/g, 'oe')
+        .replace(/ü/g, 'ue')
+        .replace(/Ä/g, 'Ae')
+        .replace(/Ö/g, 'Oe')
+        .replace(/Ü/g, 'Ue')
+        .replace(/ß/g, 'ss');
+}
+
+/**
  * Generates a minimal vCard specifically for QR codes
  * @param {Object} person - Person object
- * @returns {string} Minimal vCard string
+ * @returns {string} Minimal vCard string (ASCII-safe for QR codes)
  */
 function generateVCardForQR(person) {
+    // Convert names to ASCII to reduce QR code size (umlauts cause encoding issues)
+    const fullName = toASCII(person.fullName);
+    const lastName = toASCII(person.lastName);
+    const firstName = toASCII(person.firstName);
+
     let vcard = 'BEGIN:VCARD\n';
     vcard += 'VERSION:3.0\n';
-    vcard += `FN:${person.fullName}\n`;
-    vcard += `N:${person.lastName};${person.firstName};;;\n`;
+    vcard += `FN:${fullName}\n`;
+    vcard += `N:${lastName};${firstName};;;\n`;
 
     // Add ALL phone numbers (most important)
     person.countries.forEach(country => {
