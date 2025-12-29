@@ -17,15 +17,18 @@ function generateVCard(person, countryFilter = null) {
         ? person.countries.filter(c => c.code === countryFilter)
         : person.countries;
 
-    // Add phone numbers and emails
+    // Add phone numbers
     countries.forEach(country => {
         if (country.phone) {
             vcard += `TEL;TYPE=CELL:${country.phone.replace(/\s/g, '')}\n`;
         }
-        if (country.email) {
-            vcard += `EMAIL:${country.email}\n`;
-        }
     });
+
+    // Add email (only once, from first country that has it)
+    const emailCountry = countries.find(c => c.email);
+    if (emailCountry && emailCountry.email) {
+        vcard += `EMAIL:${emailCountry.email}\n`;
+    }
 
     // Add addresses
     countries.forEach(country => {
