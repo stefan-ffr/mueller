@@ -18,7 +18,6 @@
     {
       "code": "ch",
       "name": "Switzerland",
-      "flag": "🇨🇭",
       "phone": "+41 61 811 22 96",
       "email": "rolf@juroct.net",
       "address": "@shared/kaiseraugst"
@@ -26,7 +25,6 @@
     {
       "code": "th",
       "name": "Thailand",
-      "flag": "🇹🇭",
       "phone": "+66 99 149 28 68",
       "email": "rolf@juroct.net",
       "address": "@shared/buriam"
