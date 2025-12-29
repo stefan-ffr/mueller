@@ -1,0 +1,48 @@
+{
+  "id": "stefan",
+  "fullName": "Stefan Müller",
+  "firstName": "Stefan",
+  "lastName": "Müller",
+  "initial": "S",
+  "displayOrder": 2,
+  "theme": {
+    "colorDark": "#1e40af",
+    "gradientFrom": "blue-400",
+    "gradientTo": "indigo-600",
+    "bgGradient": "from-blue-50 to-indigo-100",
+    "textColor": "blue-600",
+    "buttonColor": "blue-600",
+    "buttonHover": "blue-700"
+  },
+  "countries": [
+    {
+      "code": "ch",
+      "name": "Switzerland",
+      "flag": "🇨🇭",
+      "phone": "+41 79 123 45 67",
+      "email": "stefan@beispiel.ch",
+      "address": {
+        "street": "Musterstrasse 123",
+        "city": "Emmenbrücke",
+        "postalCode": "6020",
+        "country": "Schweiz"
+      }
+    },
+    {
+      "code": "th",
+      "name": "Thailand",
+      "flag": "🇹🇭",
+      "phone": "+66 81 234 5678",
+      "email": null,
+      "address": {
+        "street": "123 Moo 4",
+        "district": "Tambon Beispiel",
+        "amphoe": "Amphoe Mueang",
+        "city": "Chiang Mai",
+        "postalCode": "50000",
+        "country": "Thailand"
+      }
+    }
+  ],
+  "quickContacts": null
+}

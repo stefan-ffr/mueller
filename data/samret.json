@@ -1,0 +1,35 @@
+{
+  "id": "samret",
+  "fullName": "Samret Müller",
+  "firstName": "Samret",
+  "lastName": "Müller",
+  "initial": "S",
+  "displayOrder": 4,
+  "theme": {
+    "colorDark": "#db2777",
+    "gradientFrom": "pink-400",
+    "gradientTo": "pink-600",
+    "bgGradient": "from-pink-50 to-rose-100",
+    "textColor": "pink-600",
+    "buttonColor": "pink-600",
+    "buttonHover": "pink-700"
+  },
+  "countries": [
+    {
+      "code": "th",
+      "name": "Thailand",
+      "flag": "🇹🇭",
+      "phone": "+66 81 234 5670",
+      "email": null,
+      "address": {
+        "street": "789 Moo 10",
+        "district": "Tambon Beispiel",
+        "amphoe": "Amphoe Mueang",
+        "city": "Chiang Mai",
+        "postalCode": "50000",
+        "country": "Thailand"
+      }
+    }
+  ],
+  "quickContacts": null
+}

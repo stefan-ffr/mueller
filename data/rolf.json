@@ -1,0 +1,48 @@
+{
+  "id": "rolf",
+  "fullName": "Rolf Müller",
+  "firstName": "Rolf",
+  "lastName": "Müller",
+  "initial": "R",
+  "displayOrder": 3,
+  "theme": {
+    "colorDark": "#059669",
+    "gradientFrom": "green-400",
+    "gradientTo": "emerald-600",
+    "bgGradient": "from-green-50 to-emerald-100",
+    "textColor": "green-600",
+    "buttonColor": "green-600",
+    "buttonHover": "green-700"
+  },
+  "countries": [
+    {
+      "code": "ch",
+      "name": "Switzerland",
+      "flag": "🇨🇭",
+      "phone": "+41 79 123 45 61",
+      "email": "rolf@beispiel.ch",
+      "address": {
+        "street": "Bergstrasse 789",
+        "city": "Emmenbrücke",
+        "postalCode": "6020",
+        "country": "Schweiz"
+      }
+    },
+    {
+      "code": "th",
+      "name": "Thailand",
+      "flag": "🇹🇭",
+      "phone": "+66 81 234 5679",
+      "email": null,
+      "address": {
+        "street": "456 Moo 7",
+        "district": "Tambon Beispiel",
+        "amphoe": "Amphoe Mueang",
+        "city": "Chiang Mai",
+        "postalCode": "50000",
+        "country": "Thailand"
+      }
+    }
+  ],
+  "quickContacts": null
+}

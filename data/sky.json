@@ -1,0 +1,48 @@
+{
+  "id": "sky",
+  "fullName": "Sky Müller",
+  "firstName": "Sky",
+  "lastName": "Müller",
+  "initial": "S",
+  "displayOrder": 5,
+  "theme": {
+    "colorDark": "#0891b2",
+    "gradientFrom": "cyan-400",
+    "gradientTo": "blue-600",
+    "bgGradient": "from-cyan-50 to-blue-100",
+    "textColor": "cyan-600",
+    "buttonColor": "cyan-600",
+    "buttonHover": "cyan-700"
+  },
+  "countries": [
+    {
+      "code": "th",
+      "name": "Thailand",
+      "flag": "🇹🇭",
+      "phone": "+66 81 234 5671",
+      "email": null,
+      "address": {
+        "street": "789 Moo 10",
+        "district": "Tambon Beispiel",
+        "amphoe": "Amphoe Mueang",
+        "city": "Chiang Mai",
+        "postalCode": "50000",
+        "country": "Thailand"
+      }
+    }
+  ],
+  "quickContacts": [
+    {
+      "label": "mama",
+      "name": "Samret",
+      "personId": "samret",
+      "phone": "+66812345670"
+    },
+    {
+      "label": "papa",
+      "name": "Rolf",
+      "personId": "rolf",
+      "phone": "+66812345679"
+    }
+  ]
+}

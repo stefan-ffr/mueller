@@ -1,0 +1,33 @@
+{
+  "id": "elisabeth",
+  "fullName": "Elisabeth Müller",
+  "firstName": "Elisabeth",
+  "lastName": "Müller",
+  "initial": "E",
+  "displayOrder": 1,
+  "theme": {
+    "colorDark": "#9333ea",
+    "gradientFrom": "purple-400",
+    "gradientTo": "pink-600",
+    "bgGradient": "from-purple-50 to-pink-100",
+    "textColor": "purple-600",
+    "buttonColor": "purple-600",
+    "buttonHover": "purple-700"
+  },
+  "countries": [
+    {
+      "code": "ch",
+      "name": "Switzerland",
+      "flag": "🇨🇭",
+      "phone": "+41 79 123 45 60",
+      "email": "elisabeth@beispiel.ch",
+      "address": {
+        "street": "Hauptstrasse 456",
+        "city": "Emmenbrücke",
+        "postalCode": "6020",
+        "country": "Schweiz"
+      }
+    }
+  ],
+  "quickContacts": null
+}

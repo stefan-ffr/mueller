@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Kontakt - Familie Müller</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body id="profile-body" class="min-h-screen">
+    <div class="container mx-auto px-4 py-12">
+        <div class="flex justify-between items-center mb-8">
+            <a href="index.html" id="back-link" class="inline-flex items-center hover:opacity-80">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                <span data-i18n="back">Zurück zur Übersicht</span>
+            </a>
+
+            <div class="flex gap-2">
+                <button onclick="setLanguage('de')" id="lang-de" class="px-3 py-1 rounded-lg text-sm font-semibold transition-colors duration-200">🇩🇪</button>
+                <button onclick="setLanguage('en')" id="lang-en" class="px-3 py-1 rounded-lg text-sm font-semibold transition-colors duration-200">🇬🇧</button>
+                <button onclick="setLanguage('th')" id="lang-th" class="px-3 py-1 rounded-lg text-sm font-semibold transition-colors duration-200">🇹🇭</button>
+            </div>
+        </div>
+
+        <!-- Content will be injected here -->
+        <div id="profile-content" class="max-w-4xl mx-auto">
+            <div class="text-center py-12">
+                <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+                <p class="text-gray-600 mt-4">Lädt...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts in correct order -->
+    <script src="js/utils.js"></script>
+    <script src="js/data-loader.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/vcard-generator.js"></script>
+    <script src="js/qr-generator.js"></script>
+    <script src="js/profile-renderer.js"></script>
+    <script>
+        // Initialize on page load
+        window.onload = async function() {
+            const personId = getUrlParameter('person');
+
+            if (!personId) {
+                // No person specified, redirect to index
+                window.location.href = 'index.html';
+                return;
+            }
+
+            try {
+                // Initialize i18n
+                await initI18n();
+
+                // Render profile
+                await renderProfile(personId);
+
+                // Update translations after rendering
+                updatePageLanguage();
+            } catch (error) {
+                console.error('Error initializing profile page:', error);
+            }
+        };
+    </script>
+</body>
+</html>
