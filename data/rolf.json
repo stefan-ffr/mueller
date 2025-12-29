@@ -19,12 +19,12 @@
       "code": "ch",
       "name": "Switzerland",
       "flag": "🇨🇭",
-      "phone": "+41 79 123 45 61",
-      "email": "rolf@beispiel.ch",
+      "phone": "+41 61 811 22 96",
+      "email": "rolf@juroct.net",
       "address": {
-        "street": "Bergstrasse 789",
-        "city": "Emmenbrücke",
-        "postalCode": "6020",
+        "street": "Rosenweg 9",
+        "city": "Kaiseraugst",
+        "postalCode": "4303",
         "country": "Schweiz"
       }
     },
@@ -32,14 +32,14 @@
       "code": "th",
       "name": "Thailand",
       "flag": "🇹🇭",
-      "phone": "+66 81 234 5679",
-      "email": null,
+      "phone": "+66 99 149 28 68",
+      "email": "rolf@juroct.net",
       "address": {
-        "street": "456 Moo 7",
-        "district": "Tambon Beispiel",
-        "amphoe": "Amphoe Mueang",
-        "city": "Chiang Mai",
-        "postalCode": "50000",
+        "street": "26/3 Moo 2",
+        "district": "Tambon Muang Phai",
+        "amphoe": "Amphoe Nong Ki",
+        "city": "Buri Ram",
+        "postalCode": "31210",
         "country": "Thailand"
       }
     }
