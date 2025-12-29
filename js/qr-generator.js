@@ -23,10 +23,12 @@ function generateQRCode(elementId, data, colorDark = '#000000') {
             height: 200,
             colorDark: colorDark,
             colorLight: '#ffffff',
-            correctLevel: QRCode.CorrectLevel.H
+            correctLevel: QRCode.CorrectLevel.M  // Changed from H to M for better capacity
         });
     } catch (error) {
         console.error('Error generating QR code:', error);
+        console.error('Data length:', data.length);
+        console.error('Data:', data);
         container.innerHTML = '<p class="text-red-600 text-sm">Fehler beim Generieren des QR-Codes</p>';
     }
 }
