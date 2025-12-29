@@ -1,0 +1,26 @@
+{
+  "addresses": {
+    "kaiseraugst": {
+      "street": "Rosenweg 9",
+      "city": "Kaiseraugst",
+      "postalCode": "4303",
+      "country": "Schweiz"
+    },
+    "buriam": {
+      "street": "26/3 Moo 2",
+      "district": "Tambon Muang Phai",
+      "amphoe": "Amphoe Nong Ki",
+      "city": "Buri Ram",
+      "postalCode": "31210",
+      "country": "Thailand"
+    },
+    "chiangmai": {
+      "street": "789 Moo 10",
+      "district": "Tambon Beispiel",
+      "amphoe": "Amphoe Mueang",
+      "city": "Chiang Mai",
+      "postalCode": "50000",
+      "country": "Thailand"
+    }
+  }
+}

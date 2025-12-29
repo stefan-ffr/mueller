@@ -21,12 +21,7 @@
       "flag": "🇨🇭",
       "phone": "+41 61 811 22 96",
       "email": "rolf@juroct.net",
-      "address": {
-        "street": "Rosenweg 9",
-        "city": "Kaiseraugst",
-        "postalCode": "4303",
-        "country": "Schweiz"
-      }
+      "address": "@shared/kaiseraugst"
     },
     {
       "code": "th",
@@ -34,14 +29,7 @@
       "flag": "🇹🇭",
       "phone": "+66 99 149 28 68",
       "email": "rolf@juroct.net",
-      "address": {
-        "street": "26/3 Moo 2",
-        "district": "Tambon Muang Phai",
-        "amphoe": "Amphoe Nong Ki",
-        "city": "Buri Ram",
-        "postalCode": "31210",
-        "country": "Thailand"
-      }
+      "address": "@shared/buriam"
     }
   ],
   "quickContacts": null

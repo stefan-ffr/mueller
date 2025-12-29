@@ -6,8 +6,69 @@ const PEOPLE_MANIFEST = ['elisabeth', 'stefan', 'rolf', 'samret', 'sky'];
 // Cache for loaded data
 const dataCache = {
     people: {},
-    translations: null
+    translations: null,
+    shared: null
 };
+
+/**
+ * Loads shared data (addresses, etc.) from JSON file
+ * @returns {Promise<Object>} Shared data object
+ */
+async function loadShared() {
+    // Return from cache if already loaded
+    if (dataCache.shared) {
+        return dataCache.shared;
+    }
+
+    try {
+        const response = await fetch('data/shared.json');
+        if (!response.ok) {
+            throw new Error('Failed to load shared data');
+        }
+        const data = await response.json();
+
+        // Cache the data
+        dataCache.shared = data;
+        return data;
+    } catch (error) {
+        console.error('Error loading shared data:', error);
+        throw error;
+    }
+}
+
+/**
+ * Resolves address references in person data
+ * @param {Object} person - Person object
+ * @param {Object} shared - Shared data object
+ * @returns {Object} Person with resolved addresses
+ */
+function resolveAddressReferences(person, shared) {
+    if (!shared || !shared.addresses) {
+        return person;
+    }
+
+    // Clone person to avoid mutating cached data
+    const resolved = JSON.parse(JSON.stringify(person));
+
+    // Check each country's address
+    resolved.countries.forEach(country => {
+        if (country.address && typeof country.address === 'string') {
+            // Address is a reference like "@shared/emmenbruecke"
+            if (country.address.startsWith('@shared/')) {
+                const addressKey = country.address.substring(8); // Remove "@shared/"
+                const sharedAddress = shared.addresses[addressKey];
+
+                if (sharedAddress) {
+                    country.address = sharedAddress;
+                } else {
+                    console.warn(`Shared address not found: ${addressKey}`);
+                }
+            }
+        }
+    });
+
+    return resolved;
+}
 
 /**
  * Loads a person's data from JSON file
@@ -27,9 +88,13 @@ async function loadPerson(personId) {
         }
         const data = await response.json();
 
-        // Cache the data
-        dataCache.people[personId] = data;
-        return data;
+        // Load shared data and resolve address references
+        const shared = await loadShared();
+        const resolved = resolveAddressReferences(data, shared);
+
+        // Cache the resolved data
+        dataCache.people[personId] = resolved;
+        return resolved;
     } catch (error) {
         console.error(`Error loading person ${personId}:`, error);
         throw error;

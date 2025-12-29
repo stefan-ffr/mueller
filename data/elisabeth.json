@@ -21,12 +21,7 @@
       "flag": "🇨🇭",
       "phone": "+41 61 811 26 90",
       "email": "elisabeth@juroct.ch",
-      "address": {
-        "street": "Rosenweg 9",
-        "city": "Kaiseraugst",
-        "postalCode": "4303",
-        "country": "Schweiz"
-      }
+      "address": "@shared/kaiseraugst"
     }
   ],
   "quickContacts": null

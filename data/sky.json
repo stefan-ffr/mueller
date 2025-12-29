@@ -21,14 +21,7 @@
       "flag": "🇹🇭",
       "phone": "+66 81 234 5671",
       "email": null,
-      "address": {
-        "street": "789 Moo 10",
-        "district": "Tambon Beispiel",
-        "amphoe": "Amphoe Mueang",
-        "city": "Chiang Mai",
-        "postalCode": "50000",
-        "country": "Thailand"
-      }
+      "address": "@shared/chiangmai"
     }
   ],
   "quickContacts": [
