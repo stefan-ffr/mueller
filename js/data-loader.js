@@ -3,6 +3,9 @@
 // Manifest of available people (update this when adding new family members)
 const PEOPLE_MANIFEST = ['elisabeth', 'stefan', 'rolf', 'samret', 'sky'];
 
+// Manifest of available tiles (update this when adding new tiles)
+const TILES_MANIFEST = ['example-about', 'google'];
+
 // Cache for loaded data
 const dataCache = {
     people: {},
@@ -191,7 +194,7 @@ async function loadTile(tileId) {
 }
 
 /**
- * Loads all tiles from manifest in shared.json
+ * Loads all tiles from TILES_MANIFEST
  * @returns {Promise<Array>} Array of tile objects sorted by displayOrder
  */
 async function loadAllTiles() {
@@ -200,12 +203,11 @@ async function loadAllTiles() {
         return dataCache.tiles;
     }
 
-    const shared = await loadShared();
-    if (!shared || !shared.tiles || shared.tiles.length === 0) {
+    if (TILES_MANIFEST.length === 0) {
         return [];
     }
 
-    const promises = shared.tiles.map(tileId =>
+    const promises = TILES_MANIFEST.map(tileId =>
         loadTile(tileId).catch(err => {
             console.error(`Failed to load tile ${tileId}:`, err);
             return null;
