@@ -1,0 +1,21 @@
+{
+  "id": "photos",
+  "title": {
+    "de": "Familienfotos",
+    "en": "Family Photos",
+    "th": "รูปภาพครอบครัว"
+  },
+  "description": {
+    "de": "Unsere Fotoalben",
+    "en": "Our photo albums",
+    "th": "อัลบั้มภาพของเรา"
+  },
+  "icon": "📷",
+  "type": "external",
+  "url": "https://photos.google.com/share/example",
+  "displayOrder": 100,
+  "theme": {
+    "gradientFrom": "yellow-400",
+    "gradientTo": "orange-600"
+  }
+}

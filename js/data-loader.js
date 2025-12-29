@@ -7,7 +7,8 @@ const PEOPLE_MANIFEST = ['elisabeth', 'stefan', 'rolf', 'samret', 'sky'];
 const dataCache = {
     people: {},
     translations: null,
-    shared: null
+    shared: null,
+    tiles: []
 };
 
 /**
@@ -169,4 +170,54 @@ function getCachedPerson(personId) {
  */
 function getAllCachedPeople() {
     return Object.values(dataCache.people).sort((a, b) => a.displayOrder - b.displayOrder);
+}
+
+/**
+ * Loads a tile configuration
+ * @param {string} tileId - Tile ID
+ * @returns {Promise<Object>} Tile data
+ */
+async function loadTile(tileId) {
+    try {
+        const response = await fetch(`data/tiles/${tileId}.json`);
+        if (!response.ok) {
+            throw new Error(`Failed to load tile: ${tileId}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(`Error loading tile ${tileId}:`, error);
+        return null;
+    }
+}
+
+/**
+ * Loads all tiles from manifest in shared.json
+ * @returns {Promise<Array>} Array of tile objects sorted by displayOrder
+ */
+async function loadAllTiles() {
+    // Return from cache if already loaded
+    if (dataCache.tiles.length > 0) {
+        return dataCache.tiles;
+    }
+
+    const shared = await loadShared();
+    if (!shared || !shared.tiles || shared.tiles.length === 0) {
+        return [];
+    }
+
+    const promises = shared.tiles.map(tileId =>
+        loadTile(tileId).catch(err => {
+            console.error(`Failed to load tile ${tileId}:`, err);
+            return null;
+        })
+    );
+
+    const results = await Promise.all(promises);
+    const tiles = results.filter(tile => tile !== null);
+
+    // Sort by displayOrder
+    tiles.sort((a, b) => a.displayOrder - b.displayOrder);
+
+    dataCache.tiles = tiles;
+    return tiles;
 }

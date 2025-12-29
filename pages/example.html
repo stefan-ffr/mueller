@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beispielseite - Familie Müller</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-12">
+        <div class="flex justify-between items-center mb-8">
+            <a href="../index.html" class="inline-flex items-center text-gray-700 hover:opacity-80">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                Zurück zur Übersicht
+            </a>
+        </div>
+
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-6">Beispielseite</h1>
+
+            <p class="text-lg text-gray-700 mb-4">
+                Dies ist eine Beispielseite für interne Kacheln. Du kannst hier beliebigen Content hinzufügen.
+            </p>
+
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">So funktioniert es:</h2>
+
+            <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                <li>Erstelle eine neue JSON-Datei in <code class="bg-gray-100 px-2 py-1 rounded">data/tiles/</code></li>
+                <li>Füge die Tile-ID zum <code class="bg-gray-100 px-2 py-1 rounded">tiles</code>-Array in <code class="bg-gray-100 px-2 py-1 rounded">data/shared.json</code> hinzu</li>
+                <li>Für interne Seiten: Erstelle eine HTML-Datei in <code class="bg-gray-100 px-2 py-1 rounded">pages/</code></li>
+                <li>Für externe Links: Gib einfach die URL an</li>
+            </ol>
+
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 mt-8">Beispiel-Kachel JSON:</h2>
+
+            <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto"><code>{
+  "id": "meine-kachel",
+  "title": {
+    "de": "Meine Kachel",
+    "en": "My Tile",
+    "th": "แผงของฉัน"
+  },
+  "description": {
+    "de": "Beschreibung",
+    "en": "Description",
+    "th": "คำอธิบาย"
+  },
+  "icon": "🎨",
+  "type": "internal",
+  "url": "pages/meine-seite.html",
+  "displayOrder": 102,
+  "theme": {
+    "gradientFrom": "blue-400",
+    "gradientTo": "purple-600"
+  }
+}</code></pre>
+        </div>
+    </div>
+</body>
+</html>
