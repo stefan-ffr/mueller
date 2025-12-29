@@ -40,6 +40,10 @@ function generateProfileQRCodes(person) {
     const colorDark = person.theme.colorDark;
     const vcard = generateVCard(person);
 
+    console.log('Generating QR codes for:', person.fullName);
+    console.log('vCard length:', vcard.length);
+    console.log('vCard content:', vcard);
+
     if (person.countries.length === 1) {
         // Single country: Link + vCard QR codes
         generateQRCode('qrcode-link', pageUrl, colorDark);
