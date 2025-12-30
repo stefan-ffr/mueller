@@ -206,7 +206,7 @@ function renderCountrySections(person) {
     }).join('');
 
     // Wrap in grid if multiple countries, otherwise single card
-    const containerClass = person.countries.length > 1 ? 'grid md:grid-cols-2 gap-6 mb-6' : 'mb-6';
+    const containerClass = person.countries.length > 1 ? 'grid grid-cols-1 md:grid-cols-2 gap-6 mb-6' : 'mb-6';
     const countrySectionHTML = `
         <div class="${containerClass}">
             ${countryCards}
