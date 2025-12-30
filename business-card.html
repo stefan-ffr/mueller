@@ -56,8 +56,8 @@
 
         /* QR Code container sizing */
         .qr-container {
-            width: 30mm;
-            height: 30mm;
+            width: 25mm;
+            height: 25mm;
         }
 
         .qr-container canvas,
@@ -125,7 +125,7 @@
         </div>
 
         <!-- Back sides (for dual-country cards) -->
-        <div id="cards-back" class="card-grid page-break back-side" style="display: none;">
+        <div id="cards-back" class="card-grid page-break back-side mt-12" style="display: none;">
             <!-- Back cards will be generated here -->
         </div>
     </div>
@@ -148,65 +148,66 @@
                 if (addr.district && addr.amphoe) {
                     // Thailand format
                     addressHTML = `
-                        <div class="text-xs leading-tight">
-                            ${escapeHtml(addr.street || '')}<br>
-                            ${escapeHtml(addr.district || '')}, ${escapeHtml(addr.amphoe || '')}<br>
-                            ${escapeHtml(addr.city || '')} ${addr.postalCode || ''}<br>
-                            ${escapeHtml(addr.country || '')}
-                        </div>
+                        ${escapeHtml(addr.street || '')}<br>
+                        ${escapeHtml(addr.district || '')}, ${escapeHtml(addr.amphoe || '')}<br>
+                        ${escapeHtml(addr.city || '')} ${addr.postalCode || ''}<br>
+                        ${escapeHtml(addr.country || '')}
                     `;
                 } else {
                     // Swiss format
                     addressHTML = `
-                        <div class="text-xs leading-tight">
-                            ${escapeHtml(addr.street || '')}<br>
-                            ${addr.postalCode || ''} ${escapeHtml(addr.city || '')}<br>
-                            ${escapeHtml(addr.country || '')}
-                        </div>
+                        ${escapeHtml(addr.street || '')}<br>
+                        ${addr.postalCode || ''} ${escapeHtml(addr.city || '')}<br>
+                        ${escapeHtml(addr.country || '')}
                     `;
                 }
             }
 
             return `
                 <div class="business-card bg-gradient-to-br from-${person.theme.gradientFrom} to-${person.theme.gradientTo} rounded-lg shadow-xl overflow-hidden">
-                    <div class="card-content h-full p-4 flex flex-col justify-between text-white">
-                        <!-- Header with name and flag -->
-                        <div>
-                            <div class="flex items-center justify-between mb-2">
-                                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-${person.theme.textColor} text-xl font-bold">
-                                    ${person.initial}
+                    <div class="card-content h-full p-3 flex text-black">
+                        <!-- Left side: Info -->
+                        <div class="flex-1 flex flex-col justify-between pr-2">
+                            <!-- Header with name and flag -->
+                            <div>
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-${person.theme.textColor} text-base font-bold">
+                                        ${person.initial}
+                                    </div>
+                                    <div class="text-2xl">${country.flag}</div>
                                 </div>
-                                <div class="text-3xl">${country.flag}</div>
+                                <h1 class="text-base font-bold mb-0">${escapeHtml(person.fullName)}</h1>
+                                ${isDualCountry ? `<p class="text-[10px] opacity-90">${escapeHtml(country.name)}</p>` : ''}
                             </div>
-                            <h1 class="text-lg font-bold mb-0.5">${escapeHtml(person.fullName)}</h1>
-                            ${isDualCountry ? `<p class="text-xs opacity-90">${escapeHtml(country.name)}</p>` : ''}
+
+                            <!-- Contact information -->
+                            <div class="text-[10px] space-y-0">
+                                ${country.phone ? `
+                                    <div class="flex items-center space-x-1">
+                                        <span class="text-xs">📱</span>
+                                        <span>${escapeHtml(formatPhone(country.phone))}</span>
+                                    </div>
+                                ` : ''}
+                                ${country.email ? `
+                                    <div class="flex items-center space-x-1">
+                                        <span class="text-xs">✉️</span>
+                                        <span class="text-[9px]">${escapeHtml(country.email)}</span>
+                                    </div>
+                                ` : ''}
+                                ${addressHTML ? `
+                                    <div class="flex items-start space-x-1">
+                                        <span class="text-xs">📍</span>
+                                        <div class="text-[9px] leading-tight">
+                                            ${addressHTML}
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
                         </div>
 
-                        <!-- Contact information -->
-                        <div class="text-sm space-y-0.5">
-                            ${country.phone ? `
-                                <div class="flex items-center space-x-2">
-                                    <span>📱</span>
-                                    <span class="text-xs">${escapeHtml(formatPhone(country.phone))}</span>
-                                </div>
-                            ` : ''}
-                            ${country.email ? `
-                                <div class="flex items-center space-x-2">
-                                    <span>✉️</span>
-                                    <span class="text-xs">${escapeHtml(country.email)}</span>
-                                </div>
-                            ` : ''}
-                            ${addressHTML ? `
-                                <div class="flex items-start space-x-2">
-                                    <span>📍</span>
-                                    ${addressHTML}
-                                </div>
-                            ` : ''}
-                        </div>
-
-                        <!-- QR Code with vCard -->
-                        <div class="flex justify-end">
-                            <div class="qr-container bg-white p-1 rounded">
+                        <!-- Right side: QR Code -->
+                        <div class="flex items-center">
+                            <div class="qr-container bg-white p-0.5 rounded">
                                 <div id="${qrId}"></div>
                             </div>
                         </div>
@@ -216,7 +217,7 @@
         }
 
         // Generate QR codes for all cards
-        function generateQRCodes(person, countries, cardCount = 5) {
+        function generateQRCodes(person, countries, cardCount = 10) {
             countries.forEach((country, countryIndex) => {
                 const side = countryIndex === 0 ? 'front' : 'back';
                 const vcard = generateVCardForQR(person, country.code);
@@ -227,8 +228,8 @@
                     if (element) {
                         new QRCode(element, {
                             text: vcard,
-                            width: 96,
-                            height: 96,
+                            width: 80,
+                            height: 80,
                             colorDark: person.theme.colorDark,
                             colorLight: '#ffffff',
                             correctLevel: QRCode.CorrectLevel.L
@@ -305,7 +306,7 @@
                 const countryNames = countries.map(c => c.name).join(' / ');
                 document.title = `Visitenkarte - ${person.fullName} (${countryNames})`;
 
-                const cardCount = 5; // 5 cards per page
+                const cardCount = 10; // 10 cards per page
 
                 // Generate front cards
                 const frontGrid = document.getElementById('cards-front');
