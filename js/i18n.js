@@ -80,6 +80,12 @@ function updatePageLanguage() {
         element.textContent = translate(key);
     });
 
+    // Update elements with data-i18n-html attribute (for HTML content)
+    document.querySelectorAll('[data-i18n-html]').forEach(element => {
+        const key = element.getAttribute('data-i18n-html');
+        element.innerHTML = translate(key);
+    });
+
     // Update language button states
     updateLanguageButtons();
 }
