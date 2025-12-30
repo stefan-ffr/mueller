@@ -154,9 +154,10 @@ function renderCountrySections(person) {
     const content = document.getElementById('profile-content');
     if (!content) return;
 
-    person.countries.forEach(country => {
-        const countryHTML = `
-            <div class="bg-white rounded-lg shadow-xl p-8 mb-6">
+    // Create individual country cards
+    const countryCards = person.countries.map(country => {
+        return `
+            <div class="bg-white rounded-lg shadow-xl p-8">
                 <div class="flex items-center mb-6">
                     <span class="text-3xl mr-3">${country.flag}</span>
                     <h2 class="text-2xl font-bold text-gray-800" data-i18n="${country.code === 'ch' ? 'switzerland' : (country.code === 'th' ? 'thailand' : 'contact')}">${escapeHtml(country.name)}</h2>
@@ -202,9 +203,17 @@ function renderCountrySections(person) {
                 </div>
             </div>
         `;
+    }).join('');
 
-        content.insertAdjacentHTML('beforeend', countryHTML);
-    });
+    // Wrap in grid if multiple countries, otherwise single card
+    const containerClass = person.countries.length > 1 ? 'grid md:grid-cols-2 gap-6 mb-6' : 'mb-6';
+    const countrySectionHTML = `
+        <div class="${containerClass}">
+            ${countryCards}
+        </div>
+    `;
+
+    content.insertAdjacentHTML('beforeend', countrySectionHTML);
 }
 
 /**
@@ -273,13 +282,13 @@ function renderDownloadButtons(person) {
     let buttonsHTML = '';
 
     if (person.countries.length === 1) {
-        // Single download button + print button
+        // Single download button + print button (hidden on mobile)
         buttonsHTML = `
-            <div class="grid md:grid-cols-2 gap-4 mb-6">
+            <div class="flex flex-col gap-4 mb-6">
                 <button onclick="downloadVCard(getCachedPerson('${person.id}'), null)" class="bg-${person.theme.buttonColor} hover:bg-${person.theme.buttonHover} text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200">
                     <span data-i18n="download">📥 Kontakt herunterladen</span>
                 </button>
-                <button onclick="openBusinessCard('${person.id}')" class="bg-${person.theme.buttonColor} hover:bg-${person.theme.buttonHover} text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200">
+                <button onclick="openBusinessCard('${person.id}')" class="hidden md:block bg-${person.theme.buttonColor} hover:bg-${person.theme.buttonHover} text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200">
                     <span data-i18n="print_card">🖨️ Visitenkarte drucken</span>
                 </button>
             </div>
@@ -298,7 +307,7 @@ function renderDownloadButtons(person) {
                     <span data-i18n="download_th">📥 Nur Thailand</span>
                 </button>
             </div>
-            <div class="flex justify-center">
+            <div class="hidden md:flex justify-center">
                 <button onclick="openBusinessCard('${person.id}')" class="bg-${person.theme.buttonColor} hover:bg-${person.theme.buttonHover} text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200">
                     <span data-i18n="print_card">🖨️ Visitenkarte drucken (beide Seiten)</span>
                 </button>
