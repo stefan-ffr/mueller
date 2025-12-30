@@ -82,15 +82,23 @@ function createTileCard(tile) {
     // Determine target attribute for external links
     const target = tile.type === 'external' ? ' target="_blank" rel="noopener noreferrer"' : '';
 
+    // Check if this tile has a live status badge
+    const statusBadgeHTML = tile.statusBadge ? `
+        <div class="mt-3 flex items-center">
+            <img src="${escapeHtml(tile.statusBadge)}" alt="Status" class="h-6 rounded" />
+        </div>
+    ` : '';
+
     return `
         <a href="${escapeHtml(tile.url)}"${target} class="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition-shadow duration-300 group">
             <div class="flex items-center space-x-4 mb-4">
                 <div class="w-16 h-16 bg-gradient-to-br from-${tile.theme.gradientFrom} to-${tile.theme.gradientTo} rounded-full flex items-center justify-center text-white text-4xl group-hover:scale-110 transition-transform duration-300">
                     ${tile.icon}
                 </div>
-                <div>
+                <div class="flex-1">
                     <h2 class="text-2xl font-bold text-gray-800">${escapeHtml(title)}</h2>
                     <p class="text-gray-600">${escapeHtml(description)} ${tile.type === 'external' ? '↗' : '→'}</p>
+                    ${statusBadgeHTML}
                 </div>
             </div>
         </a>

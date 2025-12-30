@@ -54,22 +54,26 @@ function generateProfileQRCodes(person) {
     const pageUrl = window.location.href.split('?')[0] + '?person=' + person.id;
     const colorDark = person.theme.colorDark;
 
-    // Generate simplified vCard for QR code (only name, phone, email - no addresses!)
-    const vcardSimplified = generateVCardForQR(person);
-
     console.log('Generating QR codes for:', person.fullName);
-    console.log('Simplified vCard length:', vcardSimplified.length);
-    console.log('Simplified vCard content:', vcardSimplified);
 
     if (person.countries.length === 1) {
         // Single country: Link + vCard QR codes
+        const vcardSimplified = generateVCardForQR(person);
+        console.log('Simplified vCard length:', vcardSimplified.length);
+
         generateQRCode('qrcode-link', pageUrl, colorDark);
         generateQRCode('qrcode-vcard', vcardSimplified, colorDark);
     } else {
-        // Dual country: CH + TH + vCard QR codes
-        generateQRCode('qrcode-ch', pageUrl, colorDark);
-        generateQRCode('qrcode-th', pageUrl, colorDark);
-        generateQRCode('qrcode-vcard', vcardSimplified, colorDark);
+        // Dual country: CH vCard + TH vCard + Link to full profile
+        const vcardCH = generateVCardForQR(person, 'ch');
+        const vcardTH = generateVCardForQR(person, 'th');
+
+        console.log('CH vCard length:', vcardCH.length);
+        console.log('TH vCard length:', vcardTH.length);
+
+        generateQRCode('qrcode-ch', vcardCH, colorDark);
+        generateQRCode('qrcode-th', vcardTH, colorDark);
+        generateQRCode('qrcode-link', pageUrl, colorDark);
     }
 }
 
@@ -92,9 +96,10 @@ function toASCII(text) {
 /**
  * Generates a minimal vCard specifically for QR codes
  * @param {Object} person - Person object
+ * @param {string} countryCode - Optional country code ('ch' or 'th') to generate country-specific vCard
  * @returns {string} Minimal vCard string (ASCII-safe for QR codes)
  */
-function generateVCardForQR(person) {
+function generateVCardForQR(person, countryCode = null) {
     // Convert names to ASCII to reduce QR code size (umlauts cause encoding issues)
     const fullName = toASCII(person.fullName);
     const lastName = toASCII(person.lastName);
@@ -105,20 +110,37 @@ function generateVCardForQR(person) {
     vcard += `FN:${fullName}\n`;
     vcard += `N:${lastName};${firstName};;;\n`;
 
-    // Add ALL phone numbers (most important)
-    person.countries.forEach(country => {
-        if (country.phone) {
-            vcard += `TEL;TYPE=CELL:${country.phone.replace(/\s/g, '')}\n`;
+    if (countryCode) {
+        // Generate country-specific vCard
+        const country = person.countries.find(c => c.code === countryCode);
+        if (country) {
+            if (country.phone) {
+                vcard += `TEL;TYPE=CELL:${country.phone.replace(/\s/g, '')}\n`;
+            }
+            if (country.email) {
+                vcard += `EMAIL:${country.email}\n`;
+            }
+            if (country.address) {
+                vcard += `ADR;TYPE=HOME:;;${toASCII(country.address.street || '')};${toASCII(country.address.city || '')};${toASCII(country.address.district || '')};${country.address.postalCode || ''};${toASCII(country.address.country || '')}\n`;
+            }
         }
-    });
+    } else {
+        // Generate vCard with all countries' data
+        // Add ALL phone numbers (most important)
+        person.countries.forEach(country => {
+            if (country.phone) {
+                vcard += `TEL;TYPE=CELL:${country.phone.replace(/\s/g, '')}\n`;
+            }
+        });
 
-    // Add email (only once, from first country that has it)
-    const emailCountry = person.countries.find(c => c.email);
-    if (emailCountry && emailCountry.email) {
-        vcard += `EMAIL:${emailCountry.email}\n`;
+        // Add email (only once, from first country that has it)
+        const emailCountry = person.countries.find(c => c.email);
+        if (emailCountry && emailCountry.email) {
+            vcard += `EMAIL:${emailCountry.email}\n`;
+        }
+
+        // NO ADDRESSES for QR code - they make it too large
     }
-
-    // NO ADDRESSES for QR code - they make it too large
 
     vcard += 'END:VCARD';
     return vcard;

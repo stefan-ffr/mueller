@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Status - Familie Müller</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-12">
+        <div class="flex justify-between items-center mb-8">
+            <a href="../index.html" class="inline-flex items-center text-gray-700 hover:opacity-80">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                Zurück zur Übersicht
+            </a>
+            <div class="text-sm text-gray-500">
+                <span id="last-update">Lädt...</span>
+            </div>
+        </div>
+
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-lg shadow-xl p-8 mb-6">
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="text-6xl">📊</div>
+                    <div>
+                        <h1 class="text-4xl font-bold text-gray-800">Server Status</h1>
+                        <p class="text-gray-600">Live-Überwachung der Dienste</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading" class="bg-white rounded-lg shadow-xl p-8 text-center">
+                <div class="animate-pulse">
+                    <div class="text-4xl mb-4">⏳</div>
+                    <p class="text-gray-600">Lade Status-Informationen...</p>
+                </div>
+            </div>
+
+            <!-- Error State -->
+            <div id="error" class="bg-red-50 border border-red-200 rounded-lg shadow-xl p-8 hidden">
+                <div class="text-center">
+                    <div class="text-4xl mb-4">⚠️</div>
+                    <h2 class="text-2xl font-bold text-red-800 mb-2">Fehler beim Laden</h2>
+                    <p class="text-red-600 mb-4" id="error-message"></p>
+                    <div class="bg-yellow-50 border border-yellow-200 rounded p-4 text-left">
+                        <h3 class="font-bold text-yellow-800 mb-2">Konfiguration erforderlich:</h3>
+                        <ol class="list-decimal list-inside space-y-1 text-sm text-yellow-700">
+                            <li>Öffne <code class="bg-yellow-100 px-1 rounded">data/tiles/server-status.json</code></li>
+                            <li>Ersetze <code class="bg-yellow-100 px-1 rounded">YOUR-UPTIME-KUMA-URL.com</code> mit deiner Uptime Kuma URL</li>
+                            <li>Ersetze <code class="bg-yellow-100 px-1 rounded">your-status-page</code> mit deinem Status-Page Slug</li>
+                            <li>Passe die Monitor-IDs an deine Uptime Kuma Monitore an</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monitors Grid -->
+            <div id="monitors-grid" class="grid gap-6 hidden">
+                <!-- Will be filled dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tileConfig = null;
+        let updateInterval = null;
+
+        // Load tile configuration
+        async function loadTileConfig() {
+            try {
+                const response = await fetch('../data/tiles/server-status.json');
+                if (!response.ok) {
+                    throw new Error('Tile-Konfiguration nicht gefunden');
+                }
+                tileConfig = await response.json();
+                return tileConfig;
+            } catch (error) {
+                console.error('Error loading tile config:', error);
+                throw error;
+            }
+        }
+
+        // Fetch status from Uptime Kuma
+        async function fetchStatus() {
+            if (!tileConfig || !tileConfig.uptimeKuma) {
+                throw new Error('Uptime Kuma nicht konfiguriert');
+            }
+
+            const { baseUrl, statusPageSlug } = tileConfig.uptimeKuma;
+
+            // Check if configuration is still default
+            if (baseUrl.includes('YOUR-UPTIME-KUMA-URL')) {
+                throw new Error('Bitte konfiguriere zuerst deine Uptime Kuma URL');
+            }
+
+            try {
+                const response = await fetch(`${baseUrl}/api/status-page/${statusPageSlug}`);
+                if (!response.ok) {
+                    throw new Error(`Status-Page nicht gefunden (${response.status})`);
+                }
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error fetching status:', error);
+                throw error;
+            }
+        }
+
+        // Render monitor cards
+        function renderMonitors(statusData) {
+            const grid = document.getElementById('monitors-grid');
+            grid.innerHTML = '';
+
+            if (!statusData.publicGroupList || statusData.publicGroupList.length === 0) {
+                grid.innerHTML = '<div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center"><p class="text-yellow-700">Keine Monitore gefunden</p></div>';
+                return;
+            }
+
+            // Iterate through all groups and monitors
+            statusData.publicGroupList.forEach(group => {
+                group.monitorList.forEach(monitor => {
+                    const card = createMonitorCard(monitor);
+                    grid.insertAdjacentHTML('beforeend', card);
+                });
+            });
+
+            grid.classList.remove('hidden');
+        }
+
+        // Create monitor card HTML
+        function createMonitorCard(monitor) {
+            const isUp = monitor.status === 1;
+            const statusColor = isUp ? 'green' : 'red';
+            const statusIcon = isUp ? '🟢' : '🔴';
+            const statusText = isUp ? 'Online' : 'Offline';
+
+            const uptime24h = monitor.uptime24 ? (monitor.uptime24 * 100).toFixed(2) : 'N/A';
+            const uptime30d = monitor.uptime30 ? (monitor.uptime30 * 100).toFixed(2) : 'N/A';
+            const avgPing = monitor.avgPing ? monitor.avgPing.toFixed(0) : 'N/A';
+
+            return `
+                <div class="bg-white rounded-lg shadow-xl p-6 hover:shadow-2xl transition-shadow duration-300">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="text-3xl">${statusIcon}</div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">${escapeHtml(monitor.name)}</h3>
+                                <p class="text-sm text-${statusColor}-600 font-medium">${statusText}</p>
+                            </div>
+                        </div>
+                        ${monitor.url ? `<a href="${escapeHtml(monitor.url)}" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a>` : ''}
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-${statusColor}-600">${uptime24h}%</div>
+                            <div class="text-xs text-gray-500">Uptime 24h</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-${statusColor}-600">${uptime30d}%</div>
+                            <div class="text-xs text-gray-500">Uptime 30d</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-gray-700">${avgPing}<span class="text-sm">ms</span></div>
+                            <div class="text-xs text-gray-500">Ø Response</div>
+                        </div>
+                    </div>
+
+                    ${monitor.description ? `<div class="mt-4 pt-4 border-t border-gray-100"><p class="text-sm text-gray-600">${escapeHtml(monitor.description)}</p></div>` : ''}
+                </div>
+            `;
+        }
+
+        // Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            if (!text) return '';
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.toString().replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // Update last update timestamp
+        function updateTimestamp() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('de-DE');
+            document.getElementById('last-update').textContent = `Letzte Aktualisierung: ${timeStr}`;
+        }
+
+        // Show error
+        function showError(message) {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('monitors-grid').classList.add('hidden');
+            document.getElementById('error').classList.remove('hidden');
+            document.getElementById('error-message').textContent = message;
+        }
+
+        // Main update function
+        async function updateStatus() {
+            try {
+                const statusData = await fetchStatus();
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('error').classList.add('hidden');
+                renderMonitors(statusData);
+                updateTimestamp();
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        // Initialize
+        async function init() {
+            try {
+                await loadTileConfig();
+                await updateStatus();
+
+                // Auto-update every 30 seconds
+                updateInterval = setInterval(updateStatus, 30000);
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (updateInterval) {
+                clearInterval(updateInterval);
+            }
+        });
+
+        // Start
+        init();
+    </script>
+</body>
+</html>

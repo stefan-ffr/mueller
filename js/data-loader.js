@@ -4,7 +4,7 @@
 const PEOPLE_MANIFEST = ['elisabeth', 'stefan', 'rolf', 'samret', 'sky'];
 
 // Manifest of available tiles (update this when adding new tiles)
-const TILES_MANIFEST = ['example-about', 'google'];
+const TILES_MANIFEST = ['server-status', 'example-about', 'google'];
 
 // Cache for loaded data
 const dataCache = {

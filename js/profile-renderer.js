@@ -235,25 +235,25 @@ function renderQRSection(person) {
             </div>
         `;
     } else {
-        // Dual country: CH + TH + vCard
+        // Dual country: CH vCard + TH vCard + Link (country-specific vCards, then link)
         qrHTML = `
             <div class="grid md:grid-cols-3 gap-6 mb-6">
                 <div class="bg-white rounded-lg shadow-xl p-6">
-                    <h3 class="text-lg font-bold text-gray-800 mb-4 text-center" data-i18n="qr_ch">QR-Code Schweiz</h3>
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 text-center" data-i18n="qr_ch">vCard Schweiz</h3>
                     <div id="qrcode-ch" class="flex justify-center mb-4"></div>
-                    <p class="text-sm text-gray-600 text-center" data-i18n="qr_ch_desc">Link zur Profilseite</p>
+                    <p class="text-sm text-gray-600 text-center" data-i18n="qr_ch_desc">Nur Schweizer Kontaktdaten</p>
                 </div>
 
                 <div class="bg-white rounded-lg shadow-xl p-6">
-                    <h3 class="text-lg font-bold text-gray-800 mb-4 text-center" data-i18n="qr_th">QR-Code Thailand</h3>
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 text-center" data-i18n="qr_th">vCard Thailand</h3>
                     <div id="qrcode-th" class="flex justify-center mb-4"></div>
-                    <p class="text-sm text-gray-600 text-center" data-i18n="qr_th_desc">Link zur Profilseite</p>
+                    <p class="text-sm text-gray-600 text-center" data-i18n="qr_th_desc">Nur Thailand Kontaktdaten</p>
                 </div>
 
                 <div class="bg-white rounded-lg shadow-xl p-6">
-                    <h3 class="text-lg font-bold text-gray-800 mb-4 text-center" data-i18n="qr_vcard">QR-Code vCard</h3>
-                    <div id="qrcode-vcard" class="flex justify-center mb-4"></div>
-                    <p class="text-sm text-gray-600 text-center" data-i18n="qr_vcard_desc">Alle Kontaktdaten</p>
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 text-center" data-i18n="qr_link">QR-Code Link</h3>
+                    <div id="qrcode-link" class="flex justify-center mb-4"></div>
+                    <p class="text-sm text-gray-600 text-center" data-i18n="qr_link_desc">Link zur Profilseite</p>
                 </div>
             </div>
         `;
@@ -273,18 +273,21 @@ function renderDownloadButtons(person) {
     let buttonsHTML = '';
 
     if (person.countries.length === 1) {
-        // Single download button
+        // Single download button + print button
         buttonsHTML = `
-            <div class="flex justify-center">
+            <div class="grid md:grid-cols-2 gap-4 mb-6">
                 <button onclick="downloadVCard(getCachedPerson('${person.id}'), null)" class="bg-${person.theme.buttonColor} hover:bg-${person.theme.buttonHover} text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200">
                     <span data-i18n="download">📥 Kontakt herunterladen</span>
+                </button>
+                <button onclick="openBusinessCard('${person.id}')" class="bg-${person.theme.buttonColor} hover:bg-${person.theme.buttonHover} text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200">
+                    <span data-i18n="print_card">🖨️ Visitenkarte drucken</span>
                 </button>
             </div>
         `;
     } else {
-        // Three download buttons
+        // Download buttons
         buttonsHTML = `
-            <div class="grid md:grid-cols-3 gap-4">
+            <div class="grid md:grid-cols-3 gap-4 mb-4">
                 <button onclick="downloadVCard(getCachedPerson('${person.id}'), null)" class="bg-${person.theme.buttonColor} hover:bg-${person.theme.buttonHover} text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200">
                     <span data-i18n="download_all">📥 Komplett</span>
                 </button>
@@ -293,6 +296,11 @@ function renderDownloadButtons(person) {
                 </button>
                 <button onclick="downloadVCard(getCachedPerson('${person.id}'), 'th')" class="bg-${person.theme.buttonColor} hover:bg-${person.theme.buttonHover} text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200">
                     <span data-i18n="download_th">📥 Nur Thailand</span>
+                </button>
+            </div>
+            <div class="flex justify-center">
+                <button onclick="openBusinessCard('${person.id}')" class="bg-${person.theme.buttonColor} hover:bg-${person.theme.buttonHover} text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200">
+                    <span data-i18n="print_card">🖨️ Visitenkarte drucken (beide Seiten)</span>
                 </button>
             </div>
         `;

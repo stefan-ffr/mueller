@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitenkarte - Familie Müller</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <style>
+        /* Print-optimized styles for business cards */
+        @page {
+            size: A4;
+            margin: 10mm;
+        }
+
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .business-card {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            .page-break {
+                page-break-before: always;
+            }
+
+            /* Ensure exact sizing for print */
+            .card-container {
+                width: 210mm;
+                margin: 0 auto;
+            }
+        }
+
+        /* Standard business card size: 85mm x 55mm */
+        .business-card {
+            width: 85mm;
+            height: 55mm;
+            box-sizing: border-box;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 85mm);
+            gap: 5mm;
+            margin: 0 auto;
+            width: fit-content;
+        }
+
+        /* QR Code container sizing */
+        .qr-container {
+            width: 30mm;
+            height: 30mm;
+        }
+
+        .qr-container canvas,
+        .qr-container img {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Back side flip for duplex printing */
+        .back-side .business-card {
+            transform: scaleX(-1);
+        }
+
+        .back-side .card-content {
+            transform: scaleX(-1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Screen controls (hidden when printing) -->
+    <div class="no-print fixed top-4 right-4 space-x-2 z-50">
+        <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg">
+            🖨️ Drucken
+        </button>
+        <button onclick="window.close()" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded shadow-lg">
+            ✕ Schließen
+        </button>
+    </div>
+
+    <!-- Instructions (hidden when printing) -->
+    <div id="instructions" class="no-print container mx-auto px-4 py-8 max-w-4xl">
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+            <h2 class="text-xl font-bold text-blue-900 mb-3">📝 Druckanleitung</h2>
+            <div id="single-side-instructions">
+                <ol class="list-decimal list-inside space-y-2 text-blue-800">
+                    <li>Klicke auf "Drucken" oder drücke <kbd class="bg-white px-2 py-1 rounded border">Strg+P</kbd></li>
+                    <li>Wähle deinen Drucker aus</li>
+                    <li>Stelle sicher, dass "Hintergrundgrafiken drucken" aktiviert ist</li>
+                    <li>Verwende dickeres Papier (200-300g/m²) für beste Ergebnisse</li>
+                    <li>Schneide entlang der Karten aus (85×55mm Standard-Visitenkartengröße)</li>
+                </ol>
+            </div>
+            <div id="dual-side-instructions" style="display: none;">
+                <ol class="list-decimal list-inside space-y-2 text-blue-800">
+                    <li><strong>Seite 1 drucken:</strong> Klicke auf "Drucken" und drucke nur Seite 1</li>
+                    <li><strong>Papier umdrehen:</strong> Nimm das bedruckte Papier und lege es wieder ein (achte auf die richtige Orientierung!)</li>
+                    <li><strong>Seite 2 drucken:</strong> Drucke nun Seite 2 (Rückseiten)</li>
+                    <li>Verwende dickeres Papier (200-300g/m²) für beste Ergebnisse</li>
+                    <li>Schneide entlang der Karten aus (85×55mm Standard-Visitenkartengröße)</li>
+                </ol>
+                <div class="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded">
+                    <p class="text-yellow-800">
+                        <strong>💡 Tipp:</strong> Teste zuerst mit normalem Papier, um die richtige Orientierung für den beidseitigen Druck zu finden!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Business cards container -->
+    <div class="card-container">
+        <!-- Front sides -->
+        <div id="cards-front" class="card-grid">
+            <!-- Front cards will be generated here -->
+        </div>
+
+        <!-- Back sides (for dual-country cards) -->
+        <div id="cards-back" class="card-grid page-break back-side" style="display: none;">
+            <!-- Back cards will be generated here -->
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/data-loader.js"></script>
+    <script>
+        let person = null;
+        let isDualCountry = false;
+
+        // Generate a single business card side
+        function createBusinessCardSide(person, country, index, side = 'front') {
+            const qrId = `qr-${side}-${index}`;
+
+            // Format address for display
+            let addressHTML = '';
+            if (country.address) {
+                const addr = country.address;
+                if (addr.district && addr.amphoe) {
+                    // Thailand format
+                    addressHTML = `
+                        <div class="text-xs leading-tight">
+                            ${escapeHtml(addr.street || '')}<br>
+                            ${escapeHtml(addr.district || '')}, ${escapeHtml(addr.amphoe || '')}<br>
+                            ${escapeHtml(addr.city || '')} ${addr.postalCode || ''}<br>
+                            ${escapeHtml(addr.country || '')}
+                        </div>
+                    `;
+                } else {
+                    // Swiss format
+                    addressHTML = `
+                        <div class="text-xs leading-tight">
+                            ${escapeHtml(addr.street || '')}<br>
+                            ${addr.postalCode || ''} ${escapeHtml(addr.city || '')}<br>
+                            ${escapeHtml(addr.country || '')}
+                        </div>
+                    `;
+                }
+            }
+
+            return `
+                <div class="business-card bg-gradient-to-br from-${person.theme.gradientFrom} to-${person.theme.gradientTo} rounded-lg shadow-xl overflow-hidden">
+                    <div class="card-content h-full p-4 flex flex-col justify-between text-white">
+                        <!-- Header with name and flag -->
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-${person.theme.textColor} text-xl font-bold">
+                                    ${person.initial}
+                                </div>
+                                <div class="text-3xl">${country.flag}</div>
+                            </div>
+                            <h1 class="text-lg font-bold mb-0.5">${escapeHtml(person.fullName)}</h1>
+                            ${isDualCountry ? `<p class="text-xs opacity-90">${escapeHtml(country.name)}</p>` : ''}
+                        </div>
+
+                        <!-- Contact information -->
+                        <div class="text-sm space-y-0.5">
+                            ${country.phone ? `
+                                <div class="flex items-center space-x-2">
+                                    <span>📱</span>
+                                    <span class="text-xs">${escapeHtml(formatPhone(country.phone))}</span>
+                                </div>
+                            ` : ''}
+                            ${country.email ? `
+                                <div class="flex items-center space-x-2">
+                                    <span>✉️</span>
+                                    <span class="text-xs">${escapeHtml(country.email)}</span>
+                                </div>
+                            ` : ''}
+                            ${addressHTML ? `
+                                <div class="flex items-start space-x-2">
+                                    <span>📍</span>
+                                    ${addressHTML}
+                                </div>
+                            ` : ''}
+                        </div>
+
+                        <!-- QR Code with vCard -->
+                        <div class="flex justify-end">
+                            <div class="qr-container bg-white p-1 rounded">
+                                <div id="${qrId}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Generate QR codes for all cards
+        function generateQRCodes(person, countries, cardCount = 5) {
+            countries.forEach((country, countryIndex) => {
+                const side = countryIndex === 0 ? 'front' : 'back';
+                const vcard = generateVCardForQR(person, country.code);
+
+                for (let i = 0; i < cardCount; i++) {
+                    const qrId = `qr-${side}-${i}`;
+                    const element = document.getElementById(qrId);
+                    if (element) {
+                        new QRCode(element, {
+                            text: vcard,
+                            width: 96,
+                            height: 96,
+                            colorDark: person.theme.colorDark,
+                            colorLight: '#ffffff',
+                            correctLevel: QRCode.CorrectLevel.L
+                        });
+                    }
+                }
+            });
+        }
+
+        // Simple vCard generator (inline, similar to qr-generator.js)
+        function generateVCardForQR(person, countryCode) {
+            const toASCII = (text) => {
+                return text.toString()
+                    .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue')
+                    .replace(/Ä/g, 'Ae').replace(/Ö/g, 'Oe').replace(/Ü/g, 'Ue')
+                    .replace(/ß/g, 'ss');
+            };
+
+            const fullName = toASCII(person.fullName);
+            const lastName = toASCII(person.lastName);
+            const firstName = toASCII(person.firstName);
+
+            let vcard = 'BEGIN:VCARD\n';
+            vcard += 'VERSION:3.0\n';
+            vcard += `FN:${fullName}\n`;
+            vcard += `N:${lastName};${firstName};;;\n`;
+
+            const country = person.countries.find(c => c.code === countryCode);
+            if (country) {
+                if (country.phone) {
+                    vcard += `TEL;TYPE=CELL:${country.phone.replace(/\s/g, '')}\n`;
+                }
+                if (country.email) {
+                    vcard += `EMAIL:${country.email}\n`;
+                }
+                if (country.address) {
+                    vcard += `ADR;TYPE=HOME:;;${toASCII(country.address.street || '')};${toASCII(country.address.city || '')};${toASCII(country.address.district || '')};${country.address.postalCode || ''};${toASCII(country.address.country || '')}\n`;
+                }
+            }
+
+            vcard += 'END:VCARD';
+            return vcard;
+        }
+
+        // Initialize
+        async function init() {
+            const personId = getUrlParameter('person');
+
+            if (!personId) {
+                alert('Keine Person angegeben!');
+                window.close();
+                return;
+            }
+
+            try {
+                // Load person data
+                person = await loadPerson(personId);
+
+                // Determine if dual-country
+                isDualCountry = person.countries.length === 2;
+
+                let countries = [];
+                if (isDualCountry) {
+                    // Dual country: both sides
+                    countries = person.countries;
+                    document.getElementById('dual-side-instructions').style.display = 'block';
+                    document.getElementById('single-side-instructions').style.display = 'none';
+                } else {
+                    // Single country
+                    countries = [person.countries[0]];
+                }
+
+                // Set page title
+                const countryNames = countries.map(c => c.name).join(' / ');
+                document.title = `Visitenkarte - ${person.fullName} (${countryNames})`;
+
+                const cardCount = 5; // 5 cards per page
+
+                // Generate front cards
+                const frontGrid = document.getElementById('cards-front');
+                for (let i = 0; i < cardCount; i++) {
+                    frontGrid.insertAdjacentHTML('beforeend', createBusinessCardSide(person, countries[0], i, 'front'));
+                }
+
+                // Generate back cards if dual-country
+                if (isDualCountry) {
+                    const backGrid = document.getElementById('cards-back');
+                    backGrid.style.display = 'grid';
+                    for (let i = 0; i < cardCount; i++) {
+                        backGrid.insertAdjacentHTML('beforeend', createBusinessCardSide(person, countries[1], i, 'back'));
+                    }
+                }
+
+                // Generate QR codes after a short delay to ensure DOM is ready
+                setTimeout(() => {
+                    generateQRCodes(person, countries, cardCount);
+                }, 100);
+
+            } catch (error) {
+                console.error('Error loading business card:', error);
+                alert('Fehler beim Laden der Visitenkarte!');
+                window.close();
+            }
+        }
+
+        // Start
+        window.onload = init;
+    </script>
+</body>
+</html>

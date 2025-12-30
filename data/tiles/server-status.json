@@ -1,0 +1,36 @@
+{
+  "id": "server-status",
+  "title": {
+    "de": "Server Status",
+    "en": "Server Status",
+    "th": "สถานะเซิร์ฟเวอร์"
+  },
+  "description": {
+    "de": "Live-Überwachung",
+    "en": "Live monitoring",
+    "th": "การตรวจสอบแบบสด"
+  },
+  "icon": "📊",
+  "type": "internal",
+  "url": "pages/status.html",
+  "displayOrder": 100,
+  "theme": {
+    "gradientFrom": "green-400",
+    "gradientTo": "emerald-600"
+  },
+  "statusBadge": "https://YOUR-UPTIME-KUMA-URL.com/api/badge/1/status",
+  "uptimeKuma": {
+    "baseUrl": "https://YOUR-UPTIME-KUMA-URL.com",
+    "statusPageSlug": "your-status-page",
+    "monitors": [
+      {
+        "id": 1,
+        "name": "Hauptwebsite"
+      },
+      {
+        "id": 2,
+        "name": "API Server"
+      }
+    ]
+  }
+}
