@@ -6,6 +6,8 @@
     <title>Visitenkarte - Familie Müller</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/gh/stefan-ffr/juroct-cdn@main/v1/juroct.css" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="https://cdn.jsdelivr.net/gh/stefan-ffr/juroct-cdn@main/v1/logo.svg">
     <style>
         /* Print-optimized styles for business cards */
         @page {
@@ -77,6 +79,12 @@
     </style>
 </head>
 <body class="bg-gray-100">
+    <header class="juro-topbar no-print">
+        <a href="https://juroct.net/" class="juro-topbar-brand">
+            <img src="https://cdn.jsdelivr.net/gh/stefan-ffr/juroct-cdn@main/v1/logo-white.svg" alt="Juro">
+            <span class="juro-topbar-app">· Visitenkarte</span>
+        </a>
+    </header>
     <!-- Screen controls (hidden when printing) -->
     <div class="no-print fixed top-4 right-4 space-x-2 z-50">
         <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg" data-i18n="bc_print">

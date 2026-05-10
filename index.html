@@ -5,8 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Familie Müller</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/stefan-ffr/juroct-cdn@main/v1/juroct.css" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="https://cdn.jsdelivr.net/gh/stefan-ffr/juroct-cdn@main/v1/logo.svg">
 </head>
 <body class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 min-h-screen">
+    <header class="juro-topbar">
+        <a href="https://juroct.net/" class="juro-topbar-brand">
+            <img src="https://cdn.jsdelivr.net/gh/stefan-ffr/juroct-cdn@main/v1/logo-white.svg" alt="Juro">
+            <span class="juro-topbar-app">· Familie Müller</span>
+        </a>
+    </header>
     <div class="container mx-auto px-4 py-12">
         <div class="flex justify-end mb-8">
             <div class="flex gap-2">
@@ -30,10 +38,10 @@
             </div>
         </div>
 
-        <footer class="text-center mt-16 text-gray-600">
-            <p>&copy; 2025 <span data-i18n="footer">Familie Müller</span></p>
-        </footer>
     </div>
+    <footer class="juro-footer">
+        &copy; 2025 <span data-i18n="footer">Familie Müller</span> · powered by Juro
+    </footer>
 
     <!-- Scripts in correct order -->
     <script src="js/utils.js"></script>
